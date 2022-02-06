@@ -1,0 +1,7 @@
+django
+psycopg2
+python-dotenv
+django-solo
+
+#dev
+mixer
