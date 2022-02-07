@@ -1,4 +1,4 @@
-from django.test import TestCase, Client
+from django.test import TestCase
 from Main.tests.test_views import BaseTest
 
 class GlobalProcessorTest(BaseTest):
