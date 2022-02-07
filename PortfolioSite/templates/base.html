@@ -1,0 +1,82 @@
+
+<!DOCTYPE html>
+{% block lang %}
+<html lang="en">
+{% endblock %}
+<head>
+    {% load static %}
+    {% load my_template_tags %}
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    
+    {% block beforestyle %}{% endblock %}
+    {% block style %}
+    {% endblock %}
+    {% block extrastyle %}{% endblock %}
+    {% block extrahead %} {% endblock %}
+    {% block responsive %}{% endblock %}
+    <title>{% block title %}{% endblock %} | {{root_url}}</title>
+    {% block blockbots %}<meta name="robots" content="NONE,NOARCHIVE">{% endblock %}
+
+    <!-- Favicon link -->
+    <link rel="shortcut icon" type="image/png" href="{% static 'img/favicon.ico' %}"/>
+</head>
+
+<body class="{% if is_popup %}popup {% endif %}{% block bodyclass %}{% endblock %}"
+  data-admin-utc-offset="{% now "Z" %}" {% block extrabodyattrs %}{% endblock %}>
+
+ 
+  <!-- Page Content -->
+{% block main_container_header %}
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-xl text-center">
+{% endblock %}
+        {% block page_content %}
+        {% endblock %}
+
+        <!-- from https://dev.to/xarala221/django-class-based-views-with-pagination-2n8l -->
+        {% block pagination %}
+          {% if is_paginated %}
+            <nav aria-label="Page navigation example">
+              <ul class="pagination justify-content-center">
+                {% if page_obj.has_previous %}
+                  <li class="page-item"><a class="page-link" href="?{% param_replace page=page_obj.previous_page_number %}" >Previous</a></li>
+                {% else %}
+                  <li class="page-item disabled"><a class="page-link" href="#" tabindex="-1">Previous</a></li>
+                {% endif %}
+                  
+                {% for i in page_obj.paginator.page_range %}
+                  {% if page_obj.number == i %}
+                    <li class="page-item active"><a class="page-link" href="?{% param_replace page=i %}">{{ i }}</a></li>
+                  {% else %}
+                    <a class="page-link" href="?{% param_replace page=i %}">{{ i }} <span class="sr-only">(current)</span></a>
+                  {% endif %}
+                {% endfor %}
+                {% if page_obj.has_next %}
+                <li class="page-item"><a class="page-link" href="?{% param_replace page=page_obj.next_page_number %}">Next</a></li>
+                {% else %}
+                  <li class="page-item disabled"><a class="page-link" href="#" tabindex="-1">Next</a></li>
+                {% endif %}
+              </ul>
+            </nav>
+          {% endif %}
+        {% endblock %}
+{% block main_container_end %}
+      </div>
+    </div>
+  </div>
+{% endblock %}
+
+    {% block beforejs %}{% endblock %}
+    {% block js %}
+    {% endblock %}
+    {% block extrajs %}
+    {% endblock %}
+</body>
+
+</html>
+
+
+
