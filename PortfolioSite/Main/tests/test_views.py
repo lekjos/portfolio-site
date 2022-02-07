@@ -1,7 +1,7 @@
 from django.test import TestCase, Client
 
 # Create your tests here.
-class BasePermissionsTest(TestCase):
+class BaseTest(TestCase):
     USERNAME = 'test_username'
     PASSWORD = 'testing1234'
     
@@ -9,12 +9,12 @@ class BasePermissionsTest(TestCase):
     def setUpTestData(cls):
         cls.c = Client()
 
-class HomePageTest(BasePermissionsTest):
+class HomePageTest(BaseTest):
     def test_home(self):
         r = self.c.get('/')
         self.assertTrue(r.status_code==200, msg='Home page should return 200 not logged in')
 
-class AboutTest(BasePermissionsTest):
+class AboutTest(BaseTest):
     """
     Test About View
     """
@@ -22,7 +22,7 @@ class AboutTest(BasePermissionsTest):
         r = self.c.get('/about/')
         self.assertTrue(r.status_code==200, msg='About should return 200 not logged in')
 
-class ContactTest(BasePermissionsTest):
+class ContactTest(BaseTest):
     """
     Test Contact View
     """

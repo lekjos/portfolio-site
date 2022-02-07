@@ -1,7 +1,7 @@
 from django.test import TestCase, Client
-from Main.tests.test_views import BasePermissionsTest
+from Main.tests.test_views import BaseTest
 
-class GlobalProcessorTest(BasePermissionsTest):
+class GlobalProcessorTest(BaseTest):
     """
     Validate that global context processor is spitting out values
     """
