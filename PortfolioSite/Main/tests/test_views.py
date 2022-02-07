@@ -21,6 +21,12 @@ class AboutTest(BaseTest):
     def test_about(self):
         r = self.c.get('/about/')
         self.assertTrue(r.status_code==200, msg='About should return 200 not logged in')
+    
+    def test_title(self):
+        r = self.c.get('/about/')
+        self.assertContains(r,'<title>About')
+    
+
 
 class ContactTest(BaseTest):
     """
@@ -29,3 +35,11 @@ class ContactTest(BaseTest):
     def test_home(self):
         r = self.c.get('/contact/')
         self.assertTrue(r.status_code==200, msg='Contact should return 200 not logged in')
+    
+    def test_title(self):
+        r = self.c.get('/contact/')
+        self.assertContains(r,'<title>Contact')
+
+    def test_form_in_context(self):
+        r = self.c.get('/contact/')
+        
