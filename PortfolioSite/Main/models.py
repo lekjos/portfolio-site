@@ -11,6 +11,9 @@ class Email(models.Model):
         verbose_name="Name",
         max_length=200,
     )
+    email = models.EmailField(
+        verbose_name = "Email",
+    )
     body = models.TextField(
         verbose_name ="Body",
         help_text="4000 Character Limmit",
