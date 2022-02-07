@@ -8,3 +8,13 @@ class Home(TemplateView):
     Site Home Page
     """
     template_name='index.html'
+class About(TemplateView):
+    """
+    Site Home Page
+    """
+    template_name='about.html'
+class Contact(TemplateView):
+    """
+    Site Home Page
+    """
+    template_name='contact.html'
