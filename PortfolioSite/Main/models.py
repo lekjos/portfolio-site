@@ -25,7 +25,7 @@ class Email(models.Model):
     )
     submitted_date = models.DateTimeField(
         verbose_name="Submitted At",
-        auto_created=True,
+        auto_now_add=True,
     )
     ip_address = models.GenericIPAddressField(
         verbose_name="Sender IP Address",
