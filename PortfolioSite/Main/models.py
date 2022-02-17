@@ -1,6 +1,8 @@
 from ipaddress import ip_address
 from django.db import models
 from tinymce import models as tinymce_models 
+from django.conf import settings
+from django.urls import reverse
 
 # Create your models here.
 
@@ -48,6 +50,9 @@ class Image(models.Model):
         null=True
     )
 
+    def get_absolute_url(self):
+        return f"{settings.MEDIA_URL}{self.image.url}"
+
     def __str__(self):
         return str(self.title)
 
@@ -59,5 +64,7 @@ class Project(models.Model):
     description = tinymce_models.HTMLField()
     images = models.ManyToManyField(Image)
 
+    def get_absolute_url(self):
+        return reverse('project', kwargs={'pk':self.pk})
     def __str__(self):
         return str(self.title)
