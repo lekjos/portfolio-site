@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% block title %}Portfolio Details - {{object.title}}{% endblock %}
+
+{% block page_content %}
+    <!-- ======= Breadcrumbs ======= -->
+    <section id="breadcrumbs" class="breadcrumbs">
+      <div class="container">
+
+        <div class="d-flex justify-content-between align-items-center">
+          <h2>Portfolio Details</h2>
+          <ol>
+            <li><a href="{% url 'index' %}">Home</a></li>
+            <li>Portfolio Details</li>
+          </ol>
+        </div>
+
+      </div>
+    </section><!-- End Breadcrumbs -->
+
+    <!-- ======= Portfolio Details Section ======= -->
+    <section id="portfolio-details" class="portfolio-details">
+      <div class="container">
+
+        <div class="row gy-4">
+
+          <div class="col-lg-8">
+            <div class="portfolio-details-slider swiper">
+              <div class="swiper-wrapper align-items-center">
+                {% for image in images %}
+                <div class="swiper-slide">
+                  <img src="{{image.image.url}}" alt="">
+                </div>
+                {% endfor %}
+
+              </div>
+              <div class="swiper-pagination"></div>
+            </div>
+          </div>
+
+          <div class="col-lg-4">
+            <div class="portfolio-info">
+              <h3>{{object.title}}</h3>
+                <p>
+                  {{object.description|safe}}
+                </p>
+            </div>
+            <div class="portfolio-description">
+              <h2></h2>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section><!-- End Portfolio Details Section -->
+{% endblock %}
+  </main><!-- End #main -->
