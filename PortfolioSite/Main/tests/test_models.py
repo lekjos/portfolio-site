@@ -1,6 +1,6 @@
 from ipaddress import ip_address
 from Main.tests.test_views import BaseTest
-from Main.models import Email
+from Main.models import Email, Project, Image
 
 class EmailTest(BaseTest):
     """
@@ -25,3 +25,30 @@ class EmailTest(BaseTest):
         subject_trunc = testme.subject[:75] + '...'
         stringrep_expected = testme.name + ' - ' + subject_trunc
         self.assertEqual(str(testme), stringrep_expected, "String_rep should be same as second arg.")
+
+class ProjectTest(BaseTest):
+    """
+    Test project model.
+    """
+
+    def test_string_rep(self):
+        """
+        Test portfolio item string representation
+        """
+        testme = Project(title='titlesd')
+        stringrep_expected = str(testme.title)
+        self.assertEqual(str(testme), stringrep_expected, "String_rep should be same as second arg.")
+
+class ImageTest(BaseTest):
+    """
+    Test project model.
+    """
+
+    def test_string_rep(self):
+        """
+        Test portfolio item string representation
+        """
+        testme = Image(title='titlesdfsd')
+        stringrep_expected = str(testme.title)
+        self.assertEqual(str(testme), stringrep_expected, "String_rep should be same as second arg.")
+        

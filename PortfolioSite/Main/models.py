@@ -1,5 +1,6 @@
 from ipaddress import ip_address
 from django.db import models
+from tinymce import models as tinymce_models 
 
 # Create your models here.
 
@@ -34,3 +35,29 @@ class Email(models.Model):
     def __str__(self):
         subj = (self.subject[:75] + '...') if len(self.subject) > 75 else self.subject
         return " - ".join([self.name, subj])
+
+class Image(models.Model):
+    """
+    Stores images for projects
+    """
+    title = models.CharField(max_length=200)
+    image = models.ImageField(
+        upload_to='images/'
+    )
+    order = models.PositiveSmallIntegerField(
+        null=True
+    )
+
+    def __str__(self):
+        return str(self.title)
+
+class Project(models.Model):
+    """
+    Stores project description
+    """
+    title = models.CharField(max_length=500)
+    description = tinymce_models.HTMLField()
+    images = models.ManyToManyField(Image)
+
+    def __str__(self):
+        return str(self.title)
