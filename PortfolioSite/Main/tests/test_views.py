@@ -12,20 +12,7 @@ class BaseTest(TestCase):
 class HomePageTest(BaseTest):
     def test_home(self):
         r = self.c.get('/')
-        self.assertTrue(r.status_code==200, msg='Home page should return 200 not logged in')
-
-class AboutTest(BaseTest):
-    """
-    Test About View
-    """
-    def test_about(self):
-        r = self.c.get('/about/')
-        self.assertTrue(r.status_code==200, msg='About should return 200 not logged in')
-    
-    def test_title(self):
-        r = self.c.get('/about/')
-        self.assertContains(r,'<title>About')
-    
+        self.assertTrue(r.status_code==200, msg='Home page should return 200 not logged in')  
 
 
 class ContactTest(BaseTest):
