@@ -6,8 +6,8 @@
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
   <title>{% block title %}Leif Kjos{% endblock %}</title>
-  <meta content="" name="description">
-  <meta content="" name="keywords">
+  <meta content="{% block description %}{% endblock %}" name="description">
+  <meta content="{% block keywords %}{% endblock %}" name="keywords">
 
   <!-- Favicons -->
   <link href="{% static 'img/favicon.ico' %}" rel="icon">
