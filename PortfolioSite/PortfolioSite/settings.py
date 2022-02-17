@@ -19,7 +19,7 @@ print('base_dir', BASE_DIR)
 
 load_dotenv(os.path.join(BASE_DIR.parent, '.env'))
 
-ROOT_URL = 'http://localhost:8000'
+ROOT_URL = os.getenv('ROOT_URL','http://localhost:8000')
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
@@ -27,12 +27,29 @@ ROOT_URL = 'http://localhost:8000'
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.getenv('SECRET_KEY')
 
-
+env = os.getenv('DJANGO_ENV', 'dev')
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
 
-ALLOWED_HOSTS = []
+if env == 'dev':
+    DEBUG = True
+elif env == 'prod':
+    DEBUG = False
+else:
+    raise ValueError("Invalid Django Environment")
 
+ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS", "localhost").split(" ")
+
+SECURE_HSTS_SECONDS = int(os.getenv('SECURE_HSTS_SECONDS',60))
+
+SESSION_COOKIE_SECURE = True if os.getenv('SESSION_COOKIE_SECURE', 'False') == 'True' else False
+
+CSRF_COOKIE_SECURE = True if os.getenv('CSRF_COOKIE_SECURE', 'False') == 'True' else False
+
+SECURE_SSL_REDIRECT = True if os.getenv('SECURE_SSL_REDIRECT', 'False') == 'True' else False
+
+SECURE_HSTS_PRELOAD = True if os.getenv('SECURE_HSTS_PRELOAD', 'False') == 'True' else False
+
+SECURE_HSTS_INCLUDE_SUBDOMAINS = True if os.getenv('SECURE_HSTS_INCLUDE_SUBDOMAINS', 'False') == 'True' else False
 
 # Application definition
 
@@ -76,18 +93,33 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'PortfolioSite.wsgi.application'
+WSGI_APPLICATION = os.getenv('WSGI_APPLICATION','PortfolioSite.wsgi.application')
 
 
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+if env == 'dev':
+    print('USING LOCAL SQLITE TEST DB')
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
     }
-}
+else:
+    print(F'USING DB: {os.getenv("DB_SERVICE")}')
+    DATABASES = {
+        'default': {
+            'ENGINE': os.getenv('DB_ENGINE'),
+            'NAME': os.getenv('DB_NAME'),
+            'USER': os.getenv('DB_USER'),
+            'PASSWORD': os.getenv('DB_PASS'),
+            'HOST': os.getenv('DB_SERVICE'),   
+            'PORT': int(os.getenv('DB_PORT')),
+            }
+    }
+
 
 
 # Password validation
@@ -124,11 +156,11 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
-STATIC_URL = 'static/'
-MEDIA_URL = 'media/'
+STATIC_URL = os.getenv('STATIC_URL','static/')
+MEDIA_URL = os.getenv('MEDIA_URL','media/')
 MEDIA_ROOT = os.getenv('MEDIA_ROOT',os.path.join(BASE_DIR,'media'))
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static'),
+    os.getenv('STATICFILES_DIR',os.path.join(BASE_DIR, 'static')),
     ]
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
