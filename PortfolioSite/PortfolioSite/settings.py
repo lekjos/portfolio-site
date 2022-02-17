@@ -116,7 +116,7 @@ else:
             'USER': os.getenv('DB_USER'),
             'PASSWORD': os.getenv('DB_PASS'),
             'HOST': os.getenv('DB_SERVICE'),   
-            'PORT': int(os.getenv('DB_PORT')),
+            'PORT': int(os.getenv('DB_PORT', 3306)),
             }
     }
 
