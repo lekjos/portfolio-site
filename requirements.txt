@@ -2,6 +2,8 @@ django
 psycopg2
 python-dotenv
 django-solo
+pillow
+django-tinymce==3.4.0
 
 #dev
 mixer
