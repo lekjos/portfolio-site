@@ -2,10 +2,11 @@ from django.core.files.uploadedfile import SimpleUploadedFile
 from django.conf import settings
 import os
 from ipaddress import ip_address
-from Main.tests.test_views import BaseTest
+from Main.tests.test_views import BaseTest, AddFixtures
 from Main.models import Email, Project, Image
 from pprint import pprint
-import shutil
+
+from Main.tests.test_views import FIXTURES_DIR
 
 class EmailTest(BaseTest):
     """
@@ -57,57 +58,7 @@ class ImageTest(BaseTest):
         stringrep_expected = str(testme.title)
         self.assertEqual(str(testme), stringrep_expected, "String_rep should be same as second arg.")
 
-FIXTURES_DIR = os.path.join(settings.BASE_DIR,'fixtures/test_img.jpg')
-
-class StepManagerTest(BaseTest):
-
-    @classmethod
-    def setUpTestData(cls):
-        cls.test_proj1 = Project.objects.create(
-            title="test title 1",
-            description='<p>test description </p>',
-        )
-        cls.test_proj2 = Project.objects.create(
-            title="test title 2",
-            description='<p>test description </p>',
-        )
-
-        cls.proj1_img1 = Image.objects.create(
-            title="proj1 img1",
-            image = SimpleUploadedFile(name='test_image.jpg', content=open(FIXTURES_DIR, 'rb').read(), content_type='image/jpeg'),
-            caption='<p>test description </p>',
-            related_pk=cls.test_proj1.id
-        )
-        cls.proj1_img2 = Image.objects.create(
-            title="proj1 img2",
-            image = SimpleUploadedFile(name='test_image.jpg', content=open(FIXTURES_DIR, 'rb').read(), content_type='image/jpeg'),
-            caption='<p>test description </p>',
-            related_pk=cls.test_proj1.id
-        )
-
-        cls.proj2_img1 = Image.objects.create(
-            title="proj2 img1",
-            image = SimpleUploadedFile(name='test_image.jpg', content=open(FIXTURES_DIR, 'rb').read(), content_type='image/jpeg'),
-            caption='<p>test description </p>',
-            related_pk=cls.test_proj2.id
-        )
-        cls.proj2_img2 = Image.objects.create(
-            title="proj2 img2",
-            image = SimpleUploadedFile(name='test_image.jpg', content=open(FIXTURES_DIR, 'rb').read(), content_type='image/jpeg'),
-            caption='<p>test description </p>',
-            related_pk=cls.test_proj2.id
-        )
-
-    
-    def tearDown(self):
-        Project.objects.all().delete()
-        Image.objects.all().delete()
-
-        #delete media files
-        dir_path = settings.MEDIA_ROOT
-        if os.path.exists(dir_path):
-            shutil.rmtree(dir_path)
-
+class StepManagerTest(AddFixtures, BaseTest):
 
     def test_create_project(self):
         """
