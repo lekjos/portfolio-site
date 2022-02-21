@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/4.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.0/ref/settings/
 """
-import os
+import os, sys
 from pathlib import Path
 from dotenv import load_dotenv
 
@@ -159,7 +159,12 @@ USE_TZ = True
 STATIC_URL = os.getenv('STATIC_URL','static/')
 STATIC_ROOT = os.getenv('STATIC_ROOT')
 MEDIA_URL = os.getenv('MEDIA_URL','media/')
-MEDIA_ROOT = os.getenv('MEDIA_ROOT',os.path.join(BASE_DIR,'media'))
+
+if not 'test' in sys.argv:
+    MEDIA_ROOT = os.getenv('MEDIA_ROOT',os.path.join(BASE_DIR,'media'))
+else:
+    MEDIA_ROOT = os.getenv('MEDIA_ROOT',os.path.join(BASE_DIR,'test_media'))
+
 STATICFILES_DIRS = [
     os.getenv('STATICFILES_DIR',os.path.join(BASE_DIR, 'static')),
     ]
