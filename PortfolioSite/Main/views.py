@@ -42,23 +42,24 @@ class ProjectDetail(DetailView):
 
 #ajax views
 mimetype='application/json'
-def move_project(request,**kwargs):
-    """
-    Moves project order up or down
-    """
-    if not request.user.is_authenticated:
-        return HttpResponseForbidden('Unauthorized')
 
-    if request.method == 'PUT':
+class AjaxMoveBaseView(View):
+    model=None
+
+    def put(self, request, **kwargs):
+
+        if not request.user.is_authenticated:
+            return JsonResponse({'status': 'unauthorized'}, status=403)
+
         try:
             data = json.loads(request.body)
         except json.JSONDecodeError:
             return JsonResponse({'status': 'bad request'}, status=400) 
 
         try:
-            obj = Project.objects.get(pk=int(kwargs['pk']))
+            obj = self.model.objects.get(pk=int(kwargs['pk']))
             order = obj.order
-        except Project.DoesNotExist:
+        except self.model.DoesNotExist:
             return JsonResponse({'status': 'not found'}, status=404)
 
         if data['action'] == 'down':
@@ -68,16 +69,21 @@ def move_project(request,**kwargs):
                 return JsonResponse({'status': 'min already reached'}, status=400)
 
         elif data['action'] == 'up':
-            max_order = Project.objects.all().aggregate(max=Max(F('order')))
+            max_order = self.model.objects.all().aggregate(max=Max(F('order')))
             if order < max_order['max']:
                 new_order=order+1
             else:
                 return JsonResponse({'status': 'max already reached'}, status=400)
         
-        Project.objects.move(obj,new_order)
-        print('moving project!')
+        self.model.objects.move(obj,new_order)
         return JsonResponse({'status': 'success'}, status=203)
-    else:
-        return JsonResponse({'status': 'method not allowed'}, status=405)
+
+class MoveProject(AjaxMoveBaseView):
+    model = Project
+
+class MoveImage(AjaxMoveBaseView):
+    model = Image
+
+
             
             
