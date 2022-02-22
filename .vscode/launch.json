@@ -10,7 +10,8 @@
             "request": "launch",
             "program": "${workspaceFolder}\\PortfolioSite\\manage.py",
             "args": [
-                "test"
+                "test",
+                "--pattern test*.py"
             ],
             "django": true
         }
