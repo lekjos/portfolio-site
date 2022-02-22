@@ -123,34 +123,44 @@ class MoveBaseAbstract(AddUser, AddFixtures, BaseTest):
         content = json.loads(r.content.decode('utf-8'))
         self.assertEqual(content['status'], 'max already reached', 'max already reached')
 
+    def _get_objects(self):
+        """
+        returns tuple with test obj for move_up and move_down
+        """
+        pass
+    
     def test_successful_move_up(self):
         f"""test successful response for {self.model_name}"""
         self.c.login(username=self.USERNAME,password=self.PASSWORD)
-        r = self.c.put(self.base_url+str(self.test_proj1.id)+"/", content_type='application/json', data={'action':'up'})
+
+        test_obj = self._get_objects()[0]
+        r = self.c.put(self.base_url+str(test_obj.id)+"/", content_type='application/json', data={'action':'up'})
 
         self.assertEqual(r.status_code, 203, 'success')
         content = json.loads(r.content.decode('utf-8'))
         self.assertEqual(content['status'], 'success', 'success')
         
-        self.test_proj1 = self.model_class.objects.get(pk=self.test_proj1.id)
-        self.assertEqual(self.test_proj1.order, 2,'should be in second position')
+        test_obj = self.model_class.objects.get(pk=test_obj.id)
+        self.assertEqual(test_obj.order, 2,'should be in second position')
 
-        self.model_class.objects.move(self.test_proj1,1)
-        self.test_proj1 = self.model_class.objects.get(pk=self.test_proj1.id)
-        self.assertEqual(self.test_proj1.order, 1,'return to initial')
+        self.model_class.objects.move(test_obj,1)
+        test_obj = self.model_class.objects.get(pk=test_obj.id)
+        self.assertEqual(test_obj.order, 1,'return to initial')
 
     def test_successful_move_down(self):
         f"""test successful response for {self.model_name}"""
         self.c.login(username=self.USERNAME,password=self.PASSWORD)
-        r = self.c.put(self.base_url+str(self.test_proj2.id)+"/", content_type='application/json', data={'action':'down'})
+
+        test_obj = test_obj = self._get_objects()[1]
+        r = self.c.put(self.base_url+str(test_obj.id)+"/", content_type='application/json', data={'action':'down'})
 
         self.assertEqual(r.status_code, 203, 'success')
         content = json.loads(r.content.decode('utf-8'))
         self.assertEqual(content['status'], 'success', 'success')
         
-        self.test_proj2 = self.model_class.objects.get(pk=self.test_proj2.id)
-        self.assertEqual(self.test_proj2.order, 1,'should be in second position')
+        test_obj = self.model_class.objects.get(pk=test_obj.id)
+        self.assertEqual(test_obj.order, 1,'should be in second position')
 
-        self.model_class.objects.move(self.test_proj2,2)
-        self.test_proj2 = self.model_class.objects.get(pk=self.test_proj2.id)
-        self.assertEqual(self.test_proj2.order, 2,'return to initial')
+        self.model_class.objects.move(test_obj,2)
+        test_obj = self.model_class.objects.get(pk=test_obj.id)
+        self.assertEqual(test_obj.order, 2,'return to initial')

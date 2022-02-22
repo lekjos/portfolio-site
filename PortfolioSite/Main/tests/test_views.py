@@ -4,7 +4,7 @@ from django.test import TestCase
 
 import json
 
-from Main.models import Project
+from Main.models import Project, Image
 
 
 
@@ -13,12 +13,19 @@ class HomePageTest(BaseTest, TestCase):
         r = self.c.get('/')
         self.assertTrue(r.status_code==200, msg='Home page should return 200 not logged in')  
 
-
-
-class TestMoveAjax(MoveBaseAbstract, TestCase):
+class TestProjectMoveAjax(MoveBaseAbstract, TestCase):
     model_class = Project
     base_url = "/ajax/move-project/"
 
+    def _get_objects(self):
+        return (self.test_proj1, self.test_proj2)
+
+class TestImageMoveAjax(MoveBaseAbstract, TestCase):
+    model_class = Image
+    base_url = "/ajax/move-image/"
+
+    def _get_objects(self):
+        return (self.proj1_img1, self.proj1_img2)
 
 
 
