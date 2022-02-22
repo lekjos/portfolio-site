@@ -1,14 +1,13 @@
-from django.core.files.uploadedfile import SimpleUploadedFile
 from django.conf import settings
 import os
 from ipaddress import ip_address
-from Main.tests.test_views import BaseTest, AddFixtures
+from Main.tests.helpers import BaseTest, AddFixtures, FIXTURES_DIR
 from Main.models import Email, Project, Image
 from pprint import pprint
+from django.test import TestCase
 
-from Main.tests.test_views import FIXTURES_DIR
 
-class EmailTest(BaseTest):
+class EmailTest(BaseTest, TestCase):
     """
     Test email model.
     """
@@ -32,7 +31,7 @@ class EmailTest(BaseTest):
         stringrep_expected = testme.name + ' - ' + subject_trunc
         self.assertEqual(str(testme), stringrep_expected, "String_rep should be same as second arg.")
 
-class ProjectTest(BaseTest):
+class ProjectTest(BaseTest, TestCase):
     """
     Test project model.
     """
@@ -45,7 +44,7 @@ class ProjectTest(BaseTest):
         stringrep_expected = str(testme.title)
         self.assertEqual(str(testme), stringrep_expected, "String_rep should be same as second arg.")
 
-class ImageTest(BaseTest):
+class ImageTest(BaseTest, TestCase):
     """
     Test project model.
     """
@@ -58,7 +57,7 @@ class ImageTest(BaseTest):
         stringrep_expected = str(testme.title)
         self.assertEqual(str(testme), stringrep_expected, "String_rep should be same as second arg.")
 
-class StepManagerTest(AddFixtures, BaseTest):
+class StepManagerTest(AddFixtures, BaseTest, TestCase):
 
     def test_create_project(self):
         """

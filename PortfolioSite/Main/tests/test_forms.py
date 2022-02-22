@@ -1,8 +1,9 @@
 from Main.tests.test_views import BaseTest
+from django.test import TestCase
 from Main.forms import ContactForm
 from Main.models import Email
 
-class ContactFormTest(BaseTest):
+class ContactFormTest(BaseTest, TestCase):
     """
     Test email contact form.
     """
