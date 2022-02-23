@@ -102,13 +102,13 @@ class MoveBaseAbstract(AddUser, AddFixtures, BaseTest):
         r = self.c.get(self.base_url+str(self.test_proj1.id)+"/", content_type='application/json')
         self.assertEqual(r.status_code, 405, 'get not allowed')
 
-        r = self.c.put(self.base_url+str(self.test_proj1.id+20)+"/", content_type='application/json', data={'action':'down'})
+        r = self.c.put(self.base_url+str(self.test_proj1.id+20)+"/", content_type='application/json', data={'action':'up'})
         self.assertEqual(r.status_code, 404, 'not found')
 
     def test_min_reached_response(self):
         f"""test minimum reached error for {self.model_name}"""
         self.c.login(username=self.USERNAME,password=self.PASSWORD)
-        r = self.c.put(self.base_url+str(self.test_proj1.id)+"/", content_type='application/json', data={'action':'down'})
+        r = self.c.put(self.base_url+str(self.test_proj1.id)+"/", content_type='application/json', data={'action':'up'})
 
         self.assertEqual(r.status_code, 400, 'min already reached')
         content = json.loads(r.content.decode('utf-8'))
@@ -117,7 +117,7 @@ class MoveBaseAbstract(AddUser, AddFixtures, BaseTest):
     def test_max_reached_response(self):
         f"""test max reached error for {self.model_name}"""
         self.c.login(username=self.USERNAME,password=self.PASSWORD)
-        r = self.c.put(self.base_url+str(self.test_proj2.id)+"/", content_type='application/json', data={'action':'up'})
+        r = self.c.put(self.base_url+str(self.test_proj2.id)+"/", content_type='application/json', data={'action':'down'})
 
         self.assertEqual(r.status_code, 400, 'max already reached')
         content = json.loads(r.content.decode('utf-8'))
@@ -129,12 +129,12 @@ class MoveBaseAbstract(AddUser, AddFixtures, BaseTest):
         """
         pass
     
-    def test_successful_move_up(self):
+    def test_successful_move_down(self):
         f"""test successful response for {self.model_name}"""
         self.c.login(username=self.USERNAME,password=self.PASSWORD)
 
         test_obj = self._get_objects()[0]
-        r = self.c.put(self.base_url+str(test_obj.id)+"/", content_type='application/json', data={'action':'up'})
+        r = self.c.put(self.base_url+str(test_obj.id)+"/", content_type='application/json', data={'action':'down'})
 
         self.assertEqual(r.status_code, 203, 'success')
         content = json.loads(r.content.decode('utf-8'))
@@ -147,12 +147,12 @@ class MoveBaseAbstract(AddUser, AddFixtures, BaseTest):
         test_obj = self.model_class.objects.get(pk=test_obj.id)
         self.assertEqual(test_obj.order, 1,'return to initial')
 
-    def test_successful_move_down(self):
+    def test_successful_move_up(self):
         f"""test successful response for {self.model_name}"""
         self.c.login(username=self.USERNAME,password=self.PASSWORD)
 
         test_obj = test_obj = self._get_objects()[1]
-        r = self.c.put(self.base_url+str(test_obj.id)+"/", content_type='application/json', data={'action':'down'})
+        r = self.c.put(self.base_url+str(test_obj.id)+"/", content_type='application/json', data={'action':'up'})
 
         self.assertEqual(r.status_code, 203, 'success')
         content = json.loads(r.content.decode('utf-8'))
