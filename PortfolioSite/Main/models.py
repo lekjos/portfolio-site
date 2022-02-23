@@ -5,6 +5,8 @@ from tinymce import models as tinymce_models
 from django.conf import settings
 from django.urls import reverse
 from django.apps import apps
+from django.db.models import Deferrable, UniqueConstraint
+
 # Create your models here.
 
 class Email(models.Model):
@@ -118,7 +120,15 @@ class StepManager(models.Manager):
 
             return instance
 
-class Image(models.Model):
+class OrderedModel(models.Model):
+    order = models.PositiveSmallIntegerField()
+
+    objects = StepManager()
+
+    class Meta:
+        abstract=True
+
+class Image(OrderedModel):
     """
     Stores images for projects
     """
@@ -130,38 +140,49 @@ class Image(models.Model):
     image = models.ImageField(
         upload_to='images/'
     )
-    order = models.PositiveSmallIntegerField(
-        null=True
-    )
+
     caption = tinymce_models.HTMLField(
         max_length=1500,
         null=True,
         blank=True,
     )
 
-    objects = StepManager()
-
     def get_absolute_url(self):
         return f"{settings.MEDIA_URL}{self.image.url}"
 
     def __str__(self):
         return str(self.title)
+    
+    class Meta:
+        constraints=[
+            UniqueConstraint(
+                name='unique_image_order',
+                fields=['order'],
+                deferrable=Deferrable.DEFERRED,
+            )
+        ]
 
-class Project(models.Model):
+class Project(OrderedModel):
     """
     Stores project description
     """
     title = models.CharField(max_length=500)
     description = tinymce_models.HTMLField()
     images = models.ManyToManyField(Image)
-    order = models.PositiveSmallIntegerField(
-        unique=True
-    )
-
-    objects = StepManager()
 
     def get_absolute_url(self):
         return reverse('project', kwargs={'pk':self.pk})
     
     def __str__(self):
         return str(self.title)
+    
+    class Meta:
+        constraints=[
+            UniqueConstraint(
+                name='unique_project_order',
+                fields=['order'],
+                deferrable=Deferrable.DEFERRED,
+            )
+        ]
+    
+
