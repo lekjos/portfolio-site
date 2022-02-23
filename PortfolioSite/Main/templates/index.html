@@ -43,6 +43,10 @@
                     <a href="{% url 'project' pk=project.pk %}" title="{{project.title}}" class="w-100">{{project.title}}</a>
                   </div>
               </div>
+              {% if user.is_authenticated %}
+                <a class="btn btn-info mr-2 reorderBtn" id="{{ project.pk }}-moveUp" role="button">Up</a>
+                <a class="btn btn-info mr-2 reorderBtn" id="{{ project.pk }}-moveDown" role="button">Down</a>
+              {% endif %}
             </div>
           {% endfor %}
 
@@ -388,4 +392,55 @@
     </section><!-- End Contact Section -->
 
   </main><!-- End #main -->
+
+{% if user.is_authenticated %}
+  <script type="text/javascript">
+    // update all tasks
+         
+    $('.reorderBtn').click(function(event) {
+        var pk_action = $(this).attr('id').split('-');
+        var pk = pk_action[0];
+        var action = String(pk_action[1]).replace('move','').toLowerCase();
+
+        let cookie = document.cookie
+        let csrfToken = cookie.substring(cookie.indexOf('=') + 1);
+        console.log('pk_action');
+        console.log(pk_action);
+        console.log('pk');
+        console.log(pk);
+        console.log('action');
+        console.log(action);
+        $.ajax(
+            {
+                url:`ajax/move-project/${pk}/`,
+                type: "PUT",
+                contentType: "application/json",
+                headers: {
+                    'X-CSRFToken': csrfToken
+                },
+                dataType: 'json',
+                data:JSON.stringify({'action':action}),
+                success: function(result){
+                    console.log('success!');
+                    location.reload();
+                },
+                error: function(request, status, errorThrown){
+                    console.log('error:');
+                    console.log(request);
+                    console.log('status:');
+                    console.log(status);
+                    console.log('errorThrown');
+                    console.log(errorThrown);
+                    {% comment %} $('#testing').load(result); {% endcomment %}
+                },
+                
+            }
+        )
+        
+        
+    })
+</script>
+
+
+{% endif %}
 {% endblock %}
