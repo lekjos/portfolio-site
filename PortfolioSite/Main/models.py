@@ -200,14 +200,6 @@ class Image(OrderedModel):
     def __str__(self):
         return str(self.title)
     
-    class Meta:
-        constraints=[
-            UniqueConstraint(
-                name='unique_image_order',
-                fields=['order'],
-                deferrable=Deferrable.DEFERRED,
-            )
-        ]
 
 class Project(OrderedModel):
     """
