@@ -1,4 +1,5 @@
 from ipaddress import ip_address
+from tabnanny import verbose
 from django.db import models, transaction
 from django.db.models import F, Max
 from tinymce import models as tinymce_models 
@@ -19,6 +20,7 @@ class Email(models.Model):
     )
     email = models.EmailField(
         verbose_name = "Email",
+        max_length=500
     )
     body = models.TextField(
         verbose_name ="Body",
@@ -35,6 +37,9 @@ class Email(models.Model):
     )
     ip_address = models.GenericIPAddressField(
         verbose_name="Sender IP Address",
+    )
+    status = models.BooleanField(
+        verbose_name="Delivery Status"
     )
 
     def __str__(self):
