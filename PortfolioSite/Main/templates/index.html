@@ -361,8 +361,8 @@
               {% csrf_token %}
               <div class="row">
                 <div class="form-group col-md-6">
-                  <label for="sender_name">Your Name</label>
-                  <input type="text" name="sender_name" class="form-control" id="sender_name" required>
+                  <label for="name">Your Name</label>
+                  <input type="text" name="name" class="form-control" id="name" required>
                 </div>
                 <div class="form-group col-md-6">
                   <label for="name">Your Email</label>
@@ -375,7 +375,7 @@
               </div>
               <div class="form-group">
                 <label for="name">Message</label>
-                <textarea class="form-control" name="message" rows="10" required></textarea>
+                <textarea class="form-control" name="body" rows="10" required></textarea>
               </div>
               <div class="form-group">
                 <label for="name">What's 2+2?</label>

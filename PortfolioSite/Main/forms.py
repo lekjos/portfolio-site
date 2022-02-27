@@ -1,5 +1,4 @@
-from django.forms import forms
-from django.forms import ModelForm
+from django.forms import forms, ModelForm
 from Main.models import Email
 
 class ContactForm(ModelForm):
@@ -12,7 +11,7 @@ class ContactForm(ModelForm):
     
     def __init__(self, *args, **kwargs):
         """
-        Form requires ip address 
+        Form requires ip_address kwarg
         """
         self.ip_address = kwargs.pop('ip_address')
         super().__init__(*args, **kwargs)

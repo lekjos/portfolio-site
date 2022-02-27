@@ -1,12 +1,16 @@
 from ipaddress import ip_address
-from tabnanny import verbose
-from django.db import models, transaction
-from django.db.models import F, Max
-from tinymce import models as tinymce_models 
-from django.conf import settings
-from django.urls import reverse
+
 from django.apps import apps
-from django.db.models import Deferrable, UniqueConstraint
+from django.conf import settings
+from django.core.mail import EmailMessage
+from django.db import models, transaction
+from django.db.models import Deferrable, UniqueConstraint, F, Max
+from django.urls import reverse
+from django.utils import timezone
+
+from tinymce import models as tinymce_models 
+import logging
+logger = logging.getLogger(__name__)
 
 # Create your models here.
 
@@ -44,6 +48,38 @@ class Email(models.Model):
         blank=True,
     )
 
+    def forward(self):
+        """
+        Forwards email to contact form recipient. Returns status
+        """
+        body = f"""leifkjos.com contact form email:
+Name: {self.name}
+Email: {self.email}
+IP: {self.ip_address}
+At: {timezone.localtime()}
+
+Subject: {self.subject}
+
+Message:
+{self.body}
+
+"""
+        try:
+            email = EmailMessage(
+                f"Message From {self.email}: {self.subject}",
+                body,
+                settings.EMAIL_CONTACT_FROM_ADDRESS,
+                [settings.EMAIL_CONTACT_TO_ADDRESS],
+                reply_to=[self.email]
+            )
+            status = email.send()
+        except Exception as e:
+            logger.exception(f'Failed sending contact form email from {self.name} {self.email}, subject: {self.subject}', e.args)
+            status = 0
+        
+        self.status = status
+        self.save()
+        return self.status
 
     def __str__(self):
         subj = (self.subject[:75] + '...') if len(self.subject) > 75 else self.subject
