@@ -1,11 +1,8 @@
-from ipaddress import ip_address
-from smtplib import SMTPException
 from django.conf import settings
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import UserPassesTestMixin
 from django.core.mail import EmailMessage
 from django.db.models import Subquery, OuterRef, Max, F
 from django.http import HttpResponse, HttpResponseBadRequest, HttpResponseForbidden, HttpResponseNotFound, JsonResponse
-from django.shortcuts import render
 from django.views import View
 from django.views.generic import TemplateView, DetailView
 
@@ -28,18 +25,31 @@ class Home(TemplateView):
         context = super().get_context_data(**kwargs)
         context['media_url'] = settings.MEDIA_URL
         sq = Image.objects.filter(pk=OuterRef('id')).order_by('order').values('image')
-        context['projects'] = Project.objects.all().order_by('order').annotate(
+        if self.request.user.is_authenticated:
+            project_qs = Project.objects.all()
+        else:
+            project_qs = Project.objects.filter(published=True)
+        context['projects'] = project_qs.order_by('order').annotate(
             first_image = Subquery(sq[:1])
         ).values('pk', 'title', 'first_image')
 
         return context
 
-class ProjectDetail(DetailView):
+
+class ProjectDetail(UserPassesTestMixin, DetailView):
     """
     ProjectDetail Page
     """
+    raise_exception=True
     template_name='portfolio-details.html'
     model=Project
+
+    def test_func(self):
+        self.object = self.get_object()
+        if not self.object.published:
+            if not self.request.user.is_authenticated:
+                return False
+        return True
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
