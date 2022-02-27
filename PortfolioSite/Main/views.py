@@ -24,7 +24,7 @@ class Home(TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['media_url'] = settings.MEDIA_URL
-        sq = Image.objects.filter(pk=OuterRef('id')).order_by('-order').values('image')
+        sq = Image.objects.filter(pk=OuterRef('id')).order_by('order').values('image')
         if self.request.user.is_authenticated:
             project_qs = Project.objects.all()
         else:
@@ -54,7 +54,7 @@ class ProjectDetail(UserPassesTestMixin, DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['media_url'] = settings.MEDIA_URL
-        context['images'] = Image.objects.filter(project__id=self.object.id).order_by('-order')
+        context['images'] = Image.objects.filter(project__id=self.object.id).order_by('order')
 
         return context
 
