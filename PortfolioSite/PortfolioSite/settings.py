@@ -60,6 +60,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'anymail',
     'Main',
     'tinymce',
 ]
@@ -172,6 +173,88 @@ STATICFILES_DIRS = [
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+## Email Backend
+
+EMAIL_BACKEND = "anymail.backends.mailjet.EmailBackend"
+
+# Forwarding address for contact form
+EMAIL_CONTACT_FROM_ADDRESS = os.getenv('EMAIL_CONTACT_FROM_ADDRESS',None)
+EMAIL_CONTACT_TO_ADDRESS = os.getenv('EMAIL_CONTACT_TO_ADDRESS',None)
+if any([EMAIL_CONTACT_FROM_ADDRESS is None,EMAIL_CONTACT_TO_ADDRESS is None]):
+    raise ValueError('email contact form address required')
+
+ANYMAIL = {
+    "MAILJET_API_KEY": os.getenv('MAILJET_API_KEY', None),
+    "MAILJET_SECRET_KEY": os.getenv('MAILJET_SECRET_KEY', None),
+}
+
+## Logging
+
+handlers = []
+LOG_FULL_PATH = os.path.join(BASE_DIR, 'log.log')
+if os.getenv('CONSOLE_LOGGING', True) == 'True':
+    handlers.append('console')
+if os.getenv('FILE_LOGGING', False) == 'True':
+    handlers.append('file')
+if os.getenv('ADMIN_MAIL_LOGGING', False) == 'True':
+    handlers.append('mail_admins')
+    ADMINS=[
+        ('Leif Kjos', 'leif.kjos@movingxp.com'),
+        ('Tech NJ Error Notification', 'tech@movingxp.com')
+    ]
+
+
+    LOG_DIRECTORY = os.path.dirname(os.getenv('LOG_DIRECTORY', os.path.join(BASE_DIR, 'log'))) 
+    LOG_FILENAME = os.getenv('LOG_FILENAME', 'info-log.log')
+
+    if not os.path.exists(LOG_DIRECTORY):
+        print('created log directory:', LOG_DIRECTORY)
+        os.mkdir(LOG_DIRECTORY)
+    
+    LOG_FULL_PATH = os.path.join(LOG_DIRECTORY,LOG_FILENAME)
+    print('logging info to:', str(LOG_FULL_PATH))
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'console': {
+            'format': '%(name)-12s %(levelname)-8s %(message)s'
+        },
+        'file': {
+            'format': '%(asctime)s %(name)-12s %(levelname)-8s %(message)s'
+        }
+    },
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+            'formatter': 'console'
+        },
+        'file': {
+            'level': os.getenv('LOG_LEVEL', 'INFO'),
+            'class': 'logging.handlers.RotatingFileHandler',
+            'backupCount': 10, # keep at most 10 log files
+            'maxBytes': 5242880, # 5*1024*1024 bytes (5MB)
+            'formatter': 'file',
+            'filename': LOG_FULL_PATH,
+        },
+        'mail_admins': {
+            'level': 'ERROR',
+            'class': 'django.utils.log.AdminEmailHandler',
+            'include_html': True,
+        },
+    },
+    'loggers': {
+        '': {
+            'level': os.getenv('LOG_LEVEL', 'INFO'),
+            'handlers': handlers,
+        }
+    }
+}
+
+## Tiny MCE
 
 TINYMCE_SPELLCHECKER = True
 

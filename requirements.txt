@@ -4,6 +4,7 @@ python-dotenv
 django-solo
 pillow
 django-tinymce==3.4.0
+django-anymail[mailjet]
 
 #dev
 mixer
