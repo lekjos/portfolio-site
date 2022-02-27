@@ -217,6 +217,7 @@ class Project(OrderedModel):
     title = models.CharField(max_length=500)
     description = tinymce_models.HTMLField()
     images = models.ManyToManyField(Image)
+    published = models.BooleanField(default=False)
 
     def get_absolute_url(self):
         return reverse('project', kwargs={'pk':self.pk})
