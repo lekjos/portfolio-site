@@ -77,6 +77,10 @@ Message:
             logger.exception(f'Failed sending contact form email from {self.name} {self.email}, subject: {self.subject}', e.args)
             status = 0
         
+        else:
+            if status != 1:
+                logger.error(f'Failed sending contact form email from {self.name} {self.email}, subject: {self.subject}')
+        
         self.status = status
         self.save()
         return self.status
