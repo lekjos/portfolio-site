@@ -170,7 +170,6 @@ class StepManager(models.Manager):
 
 class OrderedModel(models.Model):
     order = models.PositiveSmallIntegerField()
-
     objects = StepManager()
 
     class Meta:
