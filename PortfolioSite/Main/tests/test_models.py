@@ -30,6 +30,19 @@ class EmailTest(BaseTest, TestCase):
         subject_trunc = testme.subject[:75] + '...'
         stringrep_expected = testme.name + ' - ' + subject_trunc
         self.assertEqual(str(testme), stringrep_expected, "String_rep should be same as second arg.")
+    
+    def test_forward(self):
+        testme = Email(
+            name='job blow',
+            subject = 'subject',
+            body='test body',
+            ip_address = '192.168.1.1',
+        )
+        self.assertEqual(testme.status, None, 'Should be no send status prior to forward')
+        self.assertEqual(testme.id, None, 'Should be no ID prior to save()')
+        testme.forward()
+        self.assertEqual(testme.status, 1, 'Message should send')
+        self.assertNotEqual(testme.id, None, 'Should be ID after to save()')
 
 class ProjectTest(BaseTest, TestCase):
     """
