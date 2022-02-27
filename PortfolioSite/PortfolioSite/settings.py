@@ -118,7 +118,10 @@ else:
             'PASSWORD': os.getenv('DB_PASS'),
             'HOST': os.getenv('DB_SERVICE'),   
             'PORT': int(os.getenv('DB_PORT', 3306)),
-            }
+            },
+        'options': {
+            'read_default_file':os.path.join(BASE_DIR,'mysql.cnf')
+        }
     }
 
 
