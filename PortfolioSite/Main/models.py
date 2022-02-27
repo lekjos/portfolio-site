@@ -39,8 +39,11 @@ class Email(models.Model):
         verbose_name="Sender IP Address",
     )
     status = models.BooleanField(
-        verbose_name="Delivery Status"
+        verbose_name="Delivery Status",
+        null=True,
+        blank=True,
     )
+
 
     def __str__(self):
         subj = (self.subject[:75] + '...') if len(self.subject) > 75 else self.subject
