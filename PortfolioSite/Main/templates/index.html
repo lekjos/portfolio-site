@@ -352,17 +352,17 @@
         <div class="section-title">
           <h2>Contact</h2>
           <p>Let's talk!</p>
-          <a href="mailto:hello@leifkjos.com">hello@leifkjos.com</a>
         </div>
-{% comment %} 
+ 
         <div class="row justify-content-center" data-aos="fade-in">
 
           <div class="col-lg-7 mt-5 mt-lg-0 d-flex align-items-stretch">
-            <form action="forms/contact.php" method="post" role="form" class="php-email-form">
+            <form name="contactForm" id="contactForm" method="post" role="form" class="php-email-form" action={% url 'contact' %}>
+              {% csrf_token %}
               <div class="row">
                 <div class="form-group col-md-6">
-                  <label for="name">Your Name</label>
-                  <input type="text" name="name" class="form-control" id="name" required>
+                  <label for="sender_name">Your Name</label>
+                  <input type="text" name="sender_name" class="form-control" id="sender_name" required>
                 </div>
                 <div class="form-group col-md-6">
                   <label for="name">Your Email</label>
@@ -377,6 +377,10 @@
                 <label for="name">Message</label>
                 <textarea class="form-control" name="message" rows="10" required></textarea>
               </div>
+              <div class="form-group">
+                <label for="name">What's 2+2?</label>
+                <input type="text" class="form-control" name="captcha" required>
+              </div>
               <div class="my-3">
                 <div class="loading">Loading</div>
                 <div class="error-message"></div>
@@ -386,7 +390,9 @@
             </form>
           </div>
 
-        </div> {% endcomment %}
+        </div>
+        <div id="contactOutput">
+        </div>
 
       </div>
     </section><!-- End Contact Section -->
@@ -404,12 +410,6 @@
 
         let cookie = document.cookie
         let csrfToken = cookie.substring(cookie.indexOf('=') + 1);
-        console.log('pk_action');
-        console.log(pk_action);
-        console.log('pk');
-        console.log(pk);
-        console.log('action');
-        console.log(action);
         $.ajax(
             {
                 url:`ajax/move-project/${pk}/`,
@@ -440,7 +440,6 @@
         
     })
 </script>
-
 
 {% endif %}
 {% endblock %}
