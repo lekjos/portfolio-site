@@ -1,6 +1,9 @@
 {% extends 'base.html' %}
+{% load static %}
 {% block title %}Portfolio Details - {{object.title}}{% endblock %}
-
+{% block extrastyle %}
+<link rel="stylesheet" href="{% static 'vendor/font-awesome-4.7.0/css/font-awesome.min.css' %}">
+{% endblock %}
 {% block page_content %}
     <!-- ======= Breadcrumbs ======= -->
     <section id="breadcrumbs" class="breadcrumbs">

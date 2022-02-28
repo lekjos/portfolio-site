@@ -23,6 +23,7 @@
   <link href="{% static 'vendor/boxicons/css/boxicons.min.css' %}" rel="stylesheet">
   <link href="{% static 'vendor/glightbox/css/glightbox.min.css' %}" rel="stylesheet">
   <link href="{% static 'vendor/swiper/swiper-bundle.min.css' %}" rel="stylesheet">
+  {% block extrastyle %}{% endblock %}
 
   <!-- Template Main CSS File -->
   <link href="{% static 'css/style.css' %}" rel="stylesheet">
@@ -103,6 +104,8 @@
 
   <!-- Template Main JS File -->
   <script src="{% static 'js/main.js' %}"></script>
+  {% endblock %}
+  {% block extrajs %}
   {% endblock %}
 
 </body>
