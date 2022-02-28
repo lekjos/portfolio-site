@@ -31,13 +31,15 @@
               <div class="portfolio-details-slider swiper">
                 <div class="swiper-wrapper align-items-center">
                   {% for image in images %}
-                  <div class="swiper-slide">
-                    <img class="img-fluid mx-auto d-block rounded" src="{{image.image.url}}" alt="{{image.title}}">
-                  </div>
+                    <div class="swiper-slide">
+                      <img class="img-fluid mx-auto d-block rounded" src="{{image.image.url}}" alt="{{image.title}}">
+                    </div>
                   {% endfor %}
 
                 </div>
                 <div class="swiper-pagination"></div>
+                <div class="swiper-button-prev"></div>
+                <div class="swiper-button-next"></div>
               </div>
             {% else %}
                 <div>
