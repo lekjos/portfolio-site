@@ -507,16 +507,25 @@ section {
   border-bottom: 1px solid #eee;
 }
 .portfolio-details .portfolio-info ul {
-  list-style-image:url('/static/img/chevron-right-regular-24.png');
+  /* list-style-image:url('/static/img/chevron-right-regular-24.png'); */
+  list-style: none;
   padding: 0;
   font-size: 15px;
 }
 .portfolio-details .portfolio-info ul li + li {
   margin-top: 10px;
+  line-height: 20px;
 }
 .portfolio-details .portfolio-info ul li {
   margin-top: 10px;
   margin-left: 24px;
+}
+.portfolio-details .portfolio-info ul li::before {
+  content: url('/static/img/chevron-right-regular-24.png');
+  width: 1rem;
+  height: 1rem;
+  margin-right: .5rem;
+  vertical-align: middle;
 }
 .portfolio-details .portfolio-description {
   padding-top: 30px;
