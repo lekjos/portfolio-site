@@ -27,17 +27,23 @@
         <div class="row gy-4 d-flex">
 
           <div class="col-lg-8">
-            <div class="portfolio-details-slider swiper">
-              <div class="swiper-wrapper align-items-center">
-                {% for image in images %}
-                <div class="swiper-slide">
-                  <img src="{{image.image.url}}" alt="">
-                </div>
-                {% endfor %}
+            {% if images|length > 1 %}
+              <div class="portfolio-details-slider swiper">
+                <div class="swiper-wrapper align-items-center">
+                  {% for image in images %}
+                  <div class="swiper-slide">
+                    <img class="img-fluid mx-auto d-block rounded" src="{{image.image.url}}" alt="{{image.title}}">
+                  </div>
+                  {% endfor %}
 
+                </div>
+                <div class="swiper-pagination"></div>
               </div>
-              <div class="swiper-pagination"></div>
-            </div>
+            {% else %}
+                <div>
+                  <img class="img-fluid mx-auto d-block rounded" src="{{images.0.image.url}}" alt="{{images.0.image.title}}">
+                </div>
+            {% endif %}
           </div>
 
           <div class="col-lg-4 align-self-center">
