@@ -141,7 +141,7 @@
           <div class="col-md-4 skill-group text-center">
             <i class="bx bx-conversation mb-4"></i>
             <h1 class="mb-3"> Product Management</h1>
-            <p class="text-muted"> Customer Engagement, Feedback Surveys, A-B Testing</p>
+            <p class="text-muted"> Customer Engagement, Surveys, A-B Testing</p>
           </div>
 
         </div>
@@ -166,7 +166,7 @@
               <h5>July 2020 - Present</h5>
               <p><em>Remote West Coast </em></p>
               <ul>
-                <li>Created custom ERP system that combines data from payroll, CRM, quoting tool, time tracking, phone system, and QuickBooks to provide real-time business intelligence, and KPIs</li>
+                <li>Created {% if 9 in project_ids %}<a href="{% url 'project' pk=9 %}">custom ERP system</a>{%else%}custom ERP system{%endif%} that combines data from payroll, CRM, quoting tool, time tracking, phone system, and QuickBooks to provide real-time business intelligence, and KPIs</li>
                 <li>Analyzed and created reports for job profitability and employee performance, identified where to focus marketing and sales resources and reworked price model</li>
                 <li>Automated multiple manual roles including bookkeeping, payroll, and dispatch, cutting administrative payroll costs by over 35% and reduced accounting and dispatch errors to near zero</li>
               </ul>
@@ -178,7 +178,8 @@
               <ul>
                 <li>Managed cross-functional team of Customer Service, Administrative Staff, and Electrical, Mechanical, Software, & Firmware engineers</li>
                 <li>Worked with leadership team to set engineering development goals and product requirements based on the voice of the customer</li>
-                <li>Managed customer software and hardware development projects, including project to integrate TC3Sim with VR and Haptics, Nissan Leaf Integration, and Tactile Telerobot</li>
+                <li>Managed customer software and hardware development projects, including project to integrate {% if 5 in project_ids %}<a href="{% url 'project' pk=5 %}">TC3Sim</a>{%else%}TC3Sim{%endif%} with VR and Haptics,
+                 {% if 4 in project_ids %}<a href="{% url 'project' pk=4 %}">Nissan Leaf Integration</a>{%else%}Nissan Leaf Integration{%endif%}, and {% if 1 in project_ids %}<a href="{% url 'project' pk=1 %}">Tactile Telerobot</a>{%else%}Tactile Telerobot{%endif%}</li>
                 <li>Programmed automatic customer data analytics collection system, to securely collect and process usage data from customer SDK installs, using Python, Wx, and Django Rest Framework</li>
                 <li>Created customer support program from scratch, including hiring team of 7, setting up JIRA ticketing system, and documenting support process</li>
                 <li>Worked with engineering managers to recruit, onboard, and organize team of 40 FTE engineers</li>

@@ -32,7 +32,7 @@ class Home(TemplateView):
         context['projects'] = project_qs.order_by('order').annotate(
             first_image = Subquery(sq[:1])
         ).values('pk', 'title', 'first_image')
-
+        context['project_ids'] = [x['pk'] for x in context['projects']]
         return context
 
 
