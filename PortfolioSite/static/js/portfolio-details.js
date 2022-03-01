@@ -1,12 +1,14 @@
 /**
    * Portfolio details slider
 */
+// initialize swiper
  var portfolioSwiper = new Swiper('.portfolio-details-slider', {
     speed: 400,
     loop: true,
     autoplay: {
       delay: 5000,
-      disableOnInteraction: true
+      disableOnInteraction: true,
+      pauseOnMouseEnter: true,
     },
     pagination: {
       el: '.swiper-pagination',
@@ -19,15 +21,31 @@
     }
   });
   
+  // find youtube player objects
+  // from https://stackoverflow.com/questions/12522291/pausing-youtube-iframe-api-in-javascript
+  var yt_int, yt_players={},
+      initYT = function() {
+          $(".embed > div > iframe").each(function() {
+              yt_players[this.id] = new YT.Player(this.id);
+          });
+      };
+  $.getScript("//www.youtube.com/player_api", function() {
+      yt_int = setInterval(function(){
+          if(typeof YT === "object"){
+              initYT();
+              clearInterval(yt_int);
+          }
+      },500);
+  });
 
-
-var sliderVideos = $(".embed");
+// pause embed when slide changes
+var sliderVideos = $(".embed> div > iframe");
 console.log('sliderVideos')
 console.log(sliderVideos)
 portfolioSwiper.on('slideChange', function () {
    sliderVideos.each(function( index ) {
      console.log('slide Change Triggered')
-    this.currentTime = 0;
-    this.pause();
+     console.log(yt_players[this.id])
+     yt_players[this.id].stopVideo();
    });
 });
