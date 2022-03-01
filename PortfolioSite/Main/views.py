@@ -59,7 +59,7 @@ class ProjectDetail(UserPassesTestMixin, DetailView):
         context['embeds'] = Embed.objects.filter(project__id=self.object.id).order_by('order').values('html','title')
 
         project_qs = Project.objects.all().order_by('order').values('id','title','order')
-        r = find_next_and_previous(self.object.order,project_qs)
+        r = find_next_and_previous(self.object.id,project_qs)
         context = context|r
         print(r)
 
