@@ -1,5 +1,5 @@
 from django.contrib import admin
-from Main.models import Email, Image, Project
+from Main.models import Email, Image, Embed, Project
 # Register your models here.
 
 @admin.register(Email)
@@ -9,6 +9,12 @@ class EmailAdmin(admin.ModelAdmin):
 
 @admin.register(Image)
 class ImageAdmin(admin.ModelAdmin):
+    list_display=['title','order']
+    list_filter=['order']
+    search_fields=['title']
+
+@admin.register(Embed)
+class EmbedAdmin(admin.ModelAdmin):
     list_display=['title','order']
     list_filter=['order']
     search_fields=['title']

@@ -199,7 +199,16 @@ class Image(OrderedModel):
 
     def __str__(self):
         return str(self.title)
-    
+
+class Embed(OrderedModel):
+    title = models.CharField(max_length=200)
+    html = models.TextField(
+        help_text="Paste embed HTML here. Warning, this will be rendered directly to page as |safe",
+        max_length=1500
+    )
+    def __str__(self):
+        return str(self.title)
+
 
 class Project(OrderedModel):
     """
@@ -208,6 +217,7 @@ class Project(OrderedModel):
     title = models.CharField(max_length=500)
     description = tinymce_models.HTMLField()
     images = models.ManyToManyField(Image)
+    embeds = models.ManyToManyField(Embed)
     published = models.BooleanField(default=False)
 
     def get_absolute_url(self):
