@@ -34,7 +34,7 @@ class HomePageTest(AddFixtures, TestCase):
 
         r = self.c.get('/')
         self.assertTrue(r.status_code==200, msg='Home page should return 200 logged in')  
-        print(r.context['projects'])
+        # print(r.context['projects'])
         self.assertTrue(len(r.context['projects']) == 2)
         self.assertInHTML(f'<a class="btn btn-info mr-2 reorderBtn" id="{str(self.test_proj2.id)}-moveUp" role="button">Up</a>', r.content.decode('utf-8'))
         self.c.logout()
