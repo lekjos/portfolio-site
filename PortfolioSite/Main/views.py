@@ -58,7 +58,7 @@ class ProjectDetail(UserPassesTestMixin, DetailView):
         context['images'] = Image.objects.filter(project__id=self.object.id).order_by('order').values('image', 'order','title')
         context['embeds'] = Embed.objects.filter(project__id=self.object.id).order_by('order').values('html','title')
 
-        project_qs = Project.objects.all().order_by('order').values('id','title','order')
+        project_qs = Project.objects.filter(published=True).order_by('order').values('id','title','order')
         r = find_next_and_previous(self.object.id,project_qs)
         context = context|r
         print(r)
