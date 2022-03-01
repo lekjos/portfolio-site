@@ -216,8 +216,8 @@ class Project(OrderedModel):
     """
     title = models.CharField(max_length=500)
     description = tinymce_models.HTMLField()
-    images = models.ManyToManyField(Image)
-    embeds = models.ManyToManyField(Embed)
+    images = models.ManyToManyField(Image, blank=True)
+    embeds = models.ManyToManyField(Embed, blank=True)
     published = models.BooleanField(default=False)
 
     def get_absolute_url(self):
