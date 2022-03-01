@@ -7,8 +7,8 @@ from django.views import View
 from django.views.generic import TemplateView, DetailView
 
 from Main.forms import ContactForm
-from Main.models import Project, Image, Email
-from Main.helpers import get_client_ip
+from Main.models import Project, Image, Embed, Email
+from Main.helpers import get_client_ip, find_next_and_previous
 
 from pprint import pprint
 import json, logging
@@ -49,12 +49,19 @@ class ProjectDetail(UserPassesTestMixin, DetailView):
         if not self.object.published:
             if not self.request.user.is_authenticated:
                 return False
-        return True
+        return True  
+        
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['media_url'] = settings.MEDIA_URL
-        context['images'] = Image.objects.filter(project__id=self.object.id).order_by('order')
+        context['images'] = Image.objects.filter(project__id=self.object.id).order_by('order').values('image', 'order','title')
+        context['embeds'] = Embed.objects.filter(project__id=self.object.id).order_by('order').values('html','title')
+
+        project_qs = Project.objects.all().order_by('order').values('id','title','order')
+        r = find_next_and_previous(self.object.order,project_qs)
+        context = context|r
+        print(r)
 
         return context
 

@@ -32,8 +32,17 @@
                 <div class="swiper-wrapper align-items-center">
                   {% for image in images %}
                     <div class="swiper-slide">
-                      <img class="img-fluid mx-auto d-block rounded" src="{{image.image.url}}" alt="{{image.title}}">
+                      <img class="img-fluid mx-auto d-block rounded" src="{{media_url}}{{image.image}}" alt="{{image.title}}">
                     </div>
+                    {% if embeds %}
+                      {% if forloop.counter == 1 %}
+                        {% for embed in embeds %}
+                          <div class="swiper-slide embed">
+                            {{embed.html|safe}}
+                          </div>
+                        {% endfor %}
+                      {% endif %}
+                    {% endif %}
                   {% endfor %}
 
                 </div>
@@ -43,7 +52,7 @@
               </div>
             {% else %}
                 <div>
-                  <img class="img-fluid mx-auto d-block rounded" src="{{images.0.image.url}}" alt="{{images.0.image.title}}">
+                  <img class="img-fluid mx-auto d-block rounded" src="{{media_url}}{{images.0.image}}" alt="{{images.0.image.title}}">
                 </div>
             {% endif %}
           </div>
@@ -60,6 +69,16 @@
             </div>
           </div>
 
+        </div>
+        <div class="row mt-3 gy-4 d-flex">
+          <div class='col border-top border-bottom'>
+          {% if previous_url %}
+            <small><a class="float-start" href={{previous_url}}><i class="bi bi-chevron-left"></i> {{previous_title}}</a></small>
+          {% endif %}
+          {% if next_url%}
+            <small><a class="float-end" href={{next_url}}>{{next_title}} <i class="bi bi-chevron-right"></i></a></small>
+          {% endif %}
+          </div>
         </div>
 
       </div>
