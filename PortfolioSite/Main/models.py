@@ -209,7 +209,6 @@ class Embed(OrderedModel):
     def __str__(self):
         return str(self.title)
 
-
 class Project(OrderedModel):
     """
     Stores project description
