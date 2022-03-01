@@ -40,12 +40,9 @@
 
 // pause embed when slide changes
 var sliderVideos = $(".embed> div > iframe");
-console.log('sliderVideos')
-console.log(sliderVideos)
+
 portfolioSwiper.on('slideChange', function () {
    sliderVideos.each(function( index ) {
-     console.log('slide Change Triggered')
-     console.log(yt_players[this.id])
      yt_players[this.id].stopVideo();
    });
 });
