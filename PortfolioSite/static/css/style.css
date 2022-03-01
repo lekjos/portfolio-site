@@ -885,6 +885,8 @@ section {
   width: 300px;
   z-index: 9999;
   background: #040b14;
+  transition: all ease-in-out 0.5s;
+  transition: all 0.5s;
 }
 #footer .copyright {
   text-align: center;
@@ -903,8 +905,8 @@ section {
 
 @media (max-width: 1199px) {
   #footer {
-    position: static;
-    width: auto;
+    width: 300px;
     padding-right: 20px 15px;
+    left: -300px;
   }
 }
