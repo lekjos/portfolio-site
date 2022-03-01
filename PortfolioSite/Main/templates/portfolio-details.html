@@ -37,8 +37,10 @@
                     {% if embeds %}
                       {% if forloop.counter == 1 %}
                         {% for embed in embeds %}
-                          <div class="swiper-slide embed">
-                            {{embed.html|safe}}
+                          <div class="swiper-slide">
+                            <div class="position-absolute top-50 start-50 translate-middle">
+                              {{embed.html|safe}}
+                            </div>
                           </div>
                         {% endfor %}
                       {% endif %}
