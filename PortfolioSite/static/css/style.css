@@ -498,7 +498,12 @@ section {
 /* resize embeds on small devices */
 @media (max-width: 900px) {
   .embed div iframe{
-    width:95%
+    width:100%;
+    height:100%;
+  }
+  .embed div {
+    width:100%;
+    overflow:hidden;
   }
 }
 .portfolio-details .portfolio-info {
