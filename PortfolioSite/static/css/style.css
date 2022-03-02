@@ -517,7 +517,7 @@ section {
     height:100%;
   }
   .embed div {
-    width:100%;
+    width:80%;
     overflow:hidden;
   }
 }
