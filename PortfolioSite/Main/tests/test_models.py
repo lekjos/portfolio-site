@@ -2,9 +2,10 @@ from django.conf import settings
 import os
 from ipaddress import ip_address
 from Main.tests.helpers import BaseTest, AddFixtures, FIXTURES_DIR
-from Main.models import Email, Project, Image
+from Main.models import Email, Project, Image, Embed
 from pprint import pprint
 from django.test import TestCase
+from django.core.files.uploadedfile import SimpleUploadedFile
 
 
 class EmailTest(BaseTest, TestCase):
@@ -69,6 +70,32 @@ class ImageTest(BaseTest, TestCase):
         testme = Image(title='titlesdfsd')
         stringrep_expected = str(testme.title)
         self.assertEqual(str(testme), stringrep_expected, "String_rep should be same as second arg.")
+    
+    def test_get_absolute_url(self):
+
+        proj = Project.objects.create(title='title',description='description')
+        
+        testme = Image.objects.create(
+            title="proj1 img1",
+            image = SimpleUploadedFile(name='test_image.jpg', content=open(FIXTURES_DIR, 'rb').read(), content_type='image/jpeg'),
+            caption='<p>test description </p>',
+            related_pk=proj.id
+            )
+
+        testme.save()
+        expected = '/media/images/test_image.jpg'
+        self.assertEqual(testme.get_absolute_url(),expected)
+
+    
+    def test_create_with_no_related_pk(self):
+        with self.assertRaises(ValueError):
+            Image.objects.create(
+                title="proj1 img1",
+                image = SimpleUploadedFile(name='test_image.jpg', content=open(FIXTURES_DIR, 'rb').read(), content_type='image/jpeg'),
+                caption='<p>test description </p>',
+            )
+
+
 
 class StepManagerTest(AddFixtures, BaseTest, TestCase):
 
@@ -134,7 +161,14 @@ class StepManagerTest(AddFixtures, BaseTest, TestCase):
         self.assertEqual(self.proj2_img1.order,1, 'order unchanged')
         self.assertEqual(self.proj2_img2.order,2, 'order unchanged')
 
-
+class EmbedTest(BaseTest, TestCase):
+    def test_string_rep(self):
+        """
+        Test portfolio item string representation
+        """
+        testme = Embed(title='titlesd')
+        stringrep_expected = str(testme.title)
+        self.assertEqual(str(testme), stringrep_expected, "String_rep should be same as second arg.")
 
 
         

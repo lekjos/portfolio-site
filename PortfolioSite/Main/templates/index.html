@@ -37,15 +37,15 @@
           {% for project in projects %}
             <div class="col-lg-4 col-md-6 portfolio-item filter-app">
               <div class="portfolio-wrap">
-                <a href="{% url 'project' pk=project.pk %}" class="d-block h-100"><span></span></a>                
+                <a href="{% url 'project' slug=project.slug %}" class="d-block h-100"><span></span></a>                
                   <img src="{{media_url}}{{project.first_image}}" class="img-fluid" alt="{{project.title}}">
                  
                   
                   <div class="portfolio-links w-100 h-100 text-center">
-                    <a href="{% url 'project' pk=project.pk %}" title="{{project.title}}" class="w-100">{{project.title}}</a>
+                    <a href="{% url 'project' slug=project.slug %}" title="{{project.title}}" class="w-100">{{project.title}}</a>
                   </div>
               </div>
-                  <a class="mobile-only" href="{% url 'project' pk=project.pk %}" title="{{project.title}}" class="w-100">{{project.title}}</a>
+                  <a class="mobile-only" href="{% url 'project' slug=project.slug %}" title="{{project.title}}" class="w-100">{{project.title}}</a>
               {% if user.is_authenticated %}
                 <a class="btn btn-info mr-2 reorderBtn" id="{{ project.pk }}-moveUp" role="button">Up</a>
                 <a class="btn btn-info mr-2 reorderBtn" id="{{ project.pk }}-moveDown" role="button">Down</a>
@@ -167,7 +167,7 @@
               <h5>July 2020 - Present</h5>
               <p><em>Remote West Coast </em></p>
               <ul>
-                <li>Created {% if 9 in project_ids %}<a href="{% url 'project' pk=9 %}">custom ERP system</a>{%else%}custom ERP system{%endif%} that combines data from payroll, CRM, quoting tool, time tracking, phone system, and QuickBooks to provide real-time business intelligence, and KPIs</li>
+                <li>Created {% if 9 in project_ids %}<a href="{% url 'project' slug='nojessery-custom-erp' %}">custom ERP system</a>{%else%}custom ERP system{%endif%} that combines data from payroll, CRM, quoting tool, time tracking, phone system, and QuickBooks to provide real-time business intelligence, and KPIs</li>
                 <li>Analyzed and created reports for job profitability and employee performance, identified where to focus marketing and sales resources and reworked price model</li>
                 <li>Automated multiple manual roles including bookkeeping, payroll, and dispatch, cutting administrative payroll costs by over 35% and reduced accounting and dispatch errors to near zero</li>
               </ul>
@@ -179,8 +179,8 @@
               <ul>
                 <li>Managed cross-functional team of Customer Service, Administrative Staff, and Electrical, Mechanical, Software, & Firmware engineers</li>
                 <li>Worked with leadership team to set engineering development goals and product requirements based on the voice of the customer</li>
-                <li>Managed customer software and hardware development projects, including project to integrate {% if 5 in project_ids %}<a href="{% url 'project' pk=5 %}">TC3Sim</a>{%else%}TC3Sim{%endif%} with VR and Haptics,
-                 {% if 4 in project_ids %}<a href="{% url 'project' pk=4 %}">Nissan Leaf Integration</a>{%else%}Nissan Leaf Integration{%endif%}, and {% if 1 in project_ids %}<a href="{% url 'project' pk=1 %}">Tactile Telerobot</a>{%else%}Tactile Telerobot{%endif%}</li>
+                <li>Managed customer software and hardware development projects, including project to integrate {% if 5 in project_ids %}<a href="{% url 'project' slug='tc3smin-vr-combat-medic-trainer' %}">TC3Sim</a>{%else%}TC3Sim{%endif%} with VR and Haptics,
+                 {% if 4 in project_ids %}<a href="{% url 'project' slug='nissan-leaf-ims-haptic-simulation' %}">Nissan Leaf Integration</a>{%else%}Nissan Leaf Integration{%endif%}, and {% if 1 in project_ids %}<a href="{% url 'project' slug='tactile-telerobot' %}">Tactile Telerobot</a>{%else%}Tactile Telerobot{%endif%}</li>
                 <li>Programmed automatic customer data analytics collection system, to securely collect and process usage data from customer SDK installs, using Python, Wx, and Django Rest Framework</li>
                 <li>Created customer support program from scratch, including hiring team of 7, setting up JIRA ticketing system, and documenting support process</li>
                 <li>Worked with engineering managers to recruit, onboard, and organize team of 40 FTE engineers</li>

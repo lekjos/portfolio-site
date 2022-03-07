@@ -5,6 +5,7 @@ from django.conf import settings
 from django.core.mail import EmailMessage
 from django.db import models, transaction
 from django.db.models import Deferrable, UniqueConstraint, F, Max
+from django.template.defaultfilters import slugify
 from django.urls import reverse
 from django.utils import timezone
 
@@ -195,7 +196,7 @@ class Image(OrderedModel):
     )
 
     def get_absolute_url(self):
-        return f"{settings.MEDIA_URL}{self.image.url}"
+        return f"{self.image.url}"
 
     def __str__(self):
         return str(self.title)
@@ -218,10 +219,16 @@ class Project(OrderedModel):
     images = models.ManyToManyField(Image, blank=True)
     embeds = models.ManyToManyField(Embed, blank=True)
     published = models.BooleanField(default=False)
+    slug = models.SlugField(max_length=250, null=True, unique=True, blank=True)
 
     def get_absolute_url(self):
-        return reverse('project', kwargs={'pk':self.pk})
-    
+        return reverse('project', kwargs={'slug':self.slug})
+
+    def save(self, *args, **kwargs): # new
+        if not self.slug:
+            self.slug = slugify(self.title)
+        return super().save(*args, **kwargs)
+
     def __str__(self):
         return str(self.title)
     

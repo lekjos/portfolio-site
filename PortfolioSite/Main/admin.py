@@ -60,4 +60,5 @@ class ProjectAdmin(admin.ModelAdmin):
     list_display=['title','order','published']
     list_filter=['published']
     search_fields=['title']
+    prepopulated_fields = {'slug': ('title',)} 
     actions=[move_up,move_down]
