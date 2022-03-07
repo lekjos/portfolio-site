@@ -31,8 +31,8 @@ class Home(TemplateView):
             project_qs = Project.objects.filter(published=True)
         context['projects'] = project_qs.order_by('order').annotate(
             first_image = Subquery(sq[:1])
-        ).values('pk', 'title', 'first_image')
-        context['project_ids'] = [x['pk'] for x in context['projects']]
+        ).values('pk', 'slug', 'title', 'first_image')
+        context['project_slugs'] = [x['slug'] for x in context['projects']]
         return context
 
 
@@ -55,12 +55,12 @@ class ProjectDetail(UserPassesTestMixin, DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['media_url'] = settings.MEDIA_URL
-        context['images'] = Image.objects.filter(project__id=self.object.id).order_by('order').values('image', 'order','title')
-        context['embeds'] = Embed.objects.filter(project__id=self.object.id).order_by('order').values('html','title')
+        context['images'] = Image.objects.filter(project__slug=self.object.slug).order_by('order').values('image', 'order','title')
+        context['embeds'] = Embed.objects.filter(project__slug=self.object.slug).order_by('order').values('html','title')
         context['enable_jquery'] = True
 
-        project_qs = Project.objects.filter(published=True).order_by('order').values('id','title','order')
-        r = find_next_and_previous(self.object.id,project_qs)
+        project_qs = Project.objects.filter(published=True).order_by('order').values('slug','title','order')
+        r = find_next_and_previous(self.object.slug,project_qs)
         context = context|r
 
         return context
@@ -86,7 +86,12 @@ class AjaxMoveBaseView(View):
             return JsonResponse({'status': 'bad request'}, status=400) 
 
         try:
-            obj = self.model.objects.get(pk=int(kwargs['pk']))
+            if 'slug' in kwargs:
+                obj = self.model.objects.get(slug=kwargs['slug'])
+            elif 'pk' in kwargs:
+                obj = self.model.objects.get(pk=int(kwargs['pk']))
+            else:
+                return JsonResponse({'status': 'bad request'}, status=400)
             order = obj.order
         except self.model.DoesNotExist:
             # print('model not found')

@@ -46,10 +46,10 @@ class TestProjectDetail(AddFixtures, TestCase):
         self.test_proj2.save()
     
     def test_unpublished_unauthenticated(self):
-        r = self.c.get(f'/projects/{self.test_proj1.id}/')
+        r = self.c.get(f'/projects/{self.test_proj1.slug}/')
         self.assertEqual(r.status_code, 403, 'unauthenticated user shouldn\'t see unpublished' )
 
-        r = self.c.get(f'/projects/{self.test_proj2.id}/')
+        r = self.c.get(f'/projects/{self.test_proj2.slug}/')
         self.assertEqual(r.status_code, 200)
 
 

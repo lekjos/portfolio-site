@@ -28,10 +28,12 @@ class AddFixtures():
         cls.test_proj1 = Project.objects.create(
             title="test title 1",
             description='<p>test description </p>',
+            slug='slug-1'
         )
         cls.test_proj2 = Project.objects.create(
             title="test title 2",
             description='<p>test description </p>',
+            slug='slug-2'
         )
 
         cls.proj1_img1 = Image.objects.create(
