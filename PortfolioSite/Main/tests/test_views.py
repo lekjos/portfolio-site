@@ -44,6 +44,13 @@ class TestProjectDetail(AddFixtures, TestCase):
         self.c=Client()
         self.test_proj2.published = True
         self.test_proj2.save()
+        self.test_proj3 = Project.objects.create(
+            title='test3',
+            slug="test-3",
+            published=True,
+            description="Test Description"
+        )
+        self.test_proj3.images.add(Image.objects.all().first())
     
     def test_unpublished_unauthenticated(self):
         r = self.c.get(f'/projects/{self.test_proj1.slug}/')
@@ -51,6 +58,14 @@ class TestProjectDetail(AddFixtures, TestCase):
 
         r = self.c.get(f'/projects/{self.test_proj2.slug}/')
         self.assertEqual(r.status_code, 200)
+    
+    def test_next_link(self):
+        r = self.c.get(f'/projects/{self.test_proj2.slug}/')
+        self.assertInHTML(f'<small><a class="float-end" href={self.test_proj3.get_absolute_url()}>{self.test_proj3.title} <i class="bi bi-chevron-right"></i></a></small>', r.content.decode('utf-8'))
+    
+    def test_previous_link(self):
+        r = self.c.get(f'/projects/{self.test_proj3.slug}/')
+        self.assertInHTML(f'<small><a class="float-start" href={self.test_proj2.get_absolute_url()}><i class="bi bi-chevron-left"></i> {self.test_proj2.title}</a></small>', r.content.decode('utf-8'))
 
 
 class TestProjectMoveAjax(MoveBaseAbstract, TestCase):
