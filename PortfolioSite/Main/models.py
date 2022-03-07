@@ -196,7 +196,7 @@ class Image(OrderedModel):
     )
 
     def get_absolute_url(self):
-        return f"{settings.MEDIA_URL}{self.image.url}"
+        return f"{self.image.url}"
 
     def __str__(self):
         return str(self.title)
