@@ -220,6 +220,7 @@ class Project(OrderedModel):
     embeds = models.ManyToManyField(Embed, blank=True)
     published = models.BooleanField(default=False)
     slug = models.SlugField(max_length=250, null=True, unique=True, blank=True)
+    short_description = models.CharField(max_length=500,null=True,blank=True)
 
     def get_absolute_url(self):
         return reverse('project', kwargs={'slug':self.slug})
