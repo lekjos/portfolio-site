@@ -58,6 +58,8 @@ class ProjectDetail(UserPassesTestMixin, DetailView):
         context['images'] = Image.objects.filter(project__slug=self.object.slug).order_by('order').values('image', 'order','title')
         context['embeds'] = Embed.objects.filter(project__slug=self.object.slug).order_by('order').values('html','title')
         context['enable_jquery'] = True
+        context['page_title'] = self.object.title
+        context['page_description'] = self.object.short_description
 
         project_qs = Project.objects.filter(published=True).order_by('order').values('slug','title','order')
         r = find_next_and_previous(self.object.slug,project_qs)

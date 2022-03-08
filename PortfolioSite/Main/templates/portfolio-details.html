@@ -9,6 +9,8 @@
 <link rel="stylesheet" href="{% static 'vendor/font-awesome-4.7.0/css/font-awesome.min.css' %}">
 {% endblock %}
 
+{% if object.keywords %}{% block keywords %}{{object.keywords}}{% endblock %}{% endif %}
+
 {% block page_content %}
 <main id="main">
     <!-- ======= Breadcrumbs ======= -->

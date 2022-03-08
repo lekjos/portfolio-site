@@ -5,18 +5,18 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>{% include 'head/title.html' %}</title>
+  <title>{{ page_title|default:'Kjos | Engineering, Data, and Strategy' }}</title>
   
   <link rel="canonical" href="{{root_url}}">
   <link rel="shortcut icon" type="image/x-icon" href="{% static 'img/apple-touch-icon.png' %}">
-  <meta name="description" content="{% include 'head/description.html' %}">
+  <meta name="description" content="{{ page_description|default:'Engineering, Data Science, Operations, and Strategy Consulting.' }}">
   <meta name="keywords" content="{% block keywords %}engineering,technology,strategy,consulting,portfolio,resume,python,django,haptics,haptic,virtual reality{% endblock %}">
   <meta name="author" content="Leif Kjos">
   <meta itemprop="thumbnailUrl" content="{% static 'img/profile-img.jpg' %}">
 
   <meta property="og:site_name" content="Leif Kjos">
-  <meta property="og:title" content="{% include 'head/title.html' %}">
-  <meta property="og:description" content="{% include 'head/description.html' %}">
+  <meta property="og:title" content="{{ page_title|default:'Kjos | Engineering, Data, and Strategy' }}">
+  <meta property="og:description" content="{{ page_description|default:'Engineering, Data Science, Operations, and Strategy Consulting.' }}">
   <meta property="og:type" content="{% block og_type %}website{% endblock %}">
   <meta property="og:url" content="{{root_url}}">
   <meta property="og:image" content="{% static 'img/profile-img.jpg' %}">
@@ -24,8 +24,8 @@
   <meta property="og:image:height" content="600">
   <meta property="og:locale" content="en_US">
 
-  <meta property="twitter:title" content="{% include 'head/title.html' %}">
-  <meta property="twitter:description" content="{% include 'head/description.html' %}">
+  <meta property="twitter:title" content="{{ page_title|default:'Kjos | Engineering, Data, and Strategy' }}">
+  <meta property="twitter:description" content="{{ page_description|default:'Engineering, Data Science, Operations, and Strategy Consulting.' }}">
   <meta property="twitter:card" content="summary">
   <meta property="twitter:url" content="{{root_url}}">
   <meta property="twitter:image" content="{% static 'img/profile-img.jpg' %}">
