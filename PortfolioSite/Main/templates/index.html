@@ -331,8 +331,7 @@
         var pk = pk_action[0];
         var action = String(pk_action[1]).replace('move','').toLowerCase();
 
-        let cookie = document.cookie
-        let csrfToken = cookie.substring(cookie.indexOf('=') + 1);
+        let csrfToken = $("input[name=csrfmiddlewaretoken]").val()
         $.ajax(
             {
                 url:`ajax/move-project/${pk}/`,
@@ -342,9 +341,11 @@
                     'X-CSRFToken': csrfToken
                 },
                 dataType: 'json',
-                data:JSON.stringify({'action':action}),
+                data:JSON.stringify({
+                  'action':action,
+                  }),
                 success: function(result){
-                    console.log('success!');
+                    {% comment %} console.log('success!'); {% endcomment %}
                     location.reload();
                 },
                 error: function(request, status, errorThrown){
