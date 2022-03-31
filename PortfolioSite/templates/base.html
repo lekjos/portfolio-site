@@ -72,7 +72,10 @@
     <!-- Identify internal users -->
     <script>
       // Identify internal users
-      posthog.identify('{{ user.get_username }}')
+      posthog.identify(
+        '{{ user.get_username }}',
+        { last_name: '{{ user.last_name }}' }, 
+        { authenticated_user: true }, )
     </script>
   {% endif %}
 </head>
