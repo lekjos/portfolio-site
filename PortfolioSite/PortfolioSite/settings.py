@@ -205,8 +205,7 @@ if os.getenv('FILE_LOGGING', False) == 'True':
 if os.getenv('ADMIN_MAIL_LOGGING', False) == 'True':
     handlers.append('mail_admins')
     ADMINS=[
-        ('Leif Kjos', 'leif.kjos@movingxp.com'),
-        ('Tech NJ Error Notification', 'tech@movingxp.com')
+        ('Leif Kjos', 'leif@leifkjos.com'),
     ]
 
 
