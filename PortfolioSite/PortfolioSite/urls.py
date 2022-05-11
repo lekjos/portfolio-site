@@ -31,3 +31,7 @@ urlpatterns = [
     path('tinymce/', include('tinymce.urls')),
     path('sitemap.xml/', sitemap, {'sitemaps': sitemaps}, name='django.contrib.sitemaps.views.sitemap'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+# add debug toolbar urls if in DEBUG mode
+if settings.DEBUG:
+    urlpatterns.append(path('__debug__/', include('debug_toolbar.urls')))
