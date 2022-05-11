@@ -21,14 +21,10 @@ load_dotenv(os.path.join(BASE_DIR.parent, '.env'))
 
 ROOT_URL = os.getenv('ROOT_URL','http://localhost:8000')
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
-
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.getenv('SECRET_KEY')
 
 env = os.getenv('DJANGO_ENV', 'dev')
-# SECURITY WARNING: don't run with debug turned on in production!
 
 if env == 'dev':
     DEBUG = True
