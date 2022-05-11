@@ -20,7 +20,7 @@ from itertools import chain
 logger = logging.getLogger(__name__)
 
 # Create your views here.
-@method_decorator(cache_page(60*60*12), name="dispatch")
+@method_decorator(cache_page(60*60), name="dispatch")
 @method_decorator(vary_on_cookie, name="dispatch")
 class Home(TemplateView):
     """
@@ -42,7 +42,7 @@ class Home(TemplateView):
         context['project_slugs'] = [x['slug'] for x in context['projects']]
         return context
 
-@method_decorator(cache_page(60*60*24), name="dispatch")
+@method_decorator(cache_page(60*60), name="dispatch")
 @method_decorator(vary_on_cookie, name="dispatch")
 class ProjectDetail(UserPassesTestMixin, DetailView):
     """
