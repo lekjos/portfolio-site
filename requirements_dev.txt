@@ -1,0 +1,4 @@
+#dev only
+mixer
+coverage
+django-debug-toolbar
