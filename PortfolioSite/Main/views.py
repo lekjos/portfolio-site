@@ -10,8 +10,9 @@ from Main.forms import ContactForm
 from Main.models import Project, Image, Embed, Email
 from Main.helpers import get_client_ip, find_next_and_previous
 
-from pprint import pprint
 import json, logging
+from itertools import chain
+
 logger = logging.getLogger(__name__)
 
 # Create your views here.
@@ -45,18 +46,29 @@ class ProjectDetail(UserPassesTestMixin, DetailView):
     model=Project
 
     def test_func(self):
-        self.object = self.get_object()
+        """
+        Hides unpublished objects
+        """
+        if not hasattr(self,'object'):
+            self.object = self.get_object()
         if not self.object.published:
             if not self.request.user.is_authenticated:
                 return False
         return True  
-        
+
+    def get(self, request, *args, **kwargs):
+        ## Don't get object if already fetched in test_func
+        if not hasattr(self,'object'):
+            self.object = self.get_object()
+        context = self.get_context_data(object=self.object)
+        return self.render_to_response(context)        
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['media_url'] = settings.MEDIA_URL
         context['images'] = Image.objects.filter(project__slug=self.object.slug).order_by('order').values('image', 'order','title')
         context['embeds'] = Embed.objects.filter(project__slug=self.object.slug).order_by('order').values('html','title')
+        context['enable_swiper'] = True if len(list(chain(context['images'],context['embeds']))) > 1 else False
         context['enable_jquery'] = True
         context['page_title'] = self.object.title
         context['page_description'] = self.object.short_description
