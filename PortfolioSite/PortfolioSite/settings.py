@@ -98,7 +98,7 @@ if DEBUG or FORCE_DEBUG_TOOLBAR:
     INSTALLED_APPS.append("debug_toolbar")
     MIDDLEWARE.append("debug_toolbar.middleware.DebugToolbarMiddleware")
     INTERNAL_IPS = list(os.getenv("INTERNAL_IPS", "127.0.0.1").split(" "))
-    
+    print(f'debug toolbar enabled, internal IPs: {", ".join(INTERNAL_IPS)}')
 
 WSGI_APPLICATION = os.getenv('WSGI_APPLICATION','PortfolioSite.wsgi.application')
 
