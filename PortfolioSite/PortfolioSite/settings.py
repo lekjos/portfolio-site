@@ -129,6 +129,13 @@ else:
         }
     }
 
+# Cache
+CACHES = {
+    "default": {
+        "BACKEND": "django.core.cache.backends.filebased.FileBasedCache",
+        "LOCATION": os.getenv("CACHE_LOCATION","/var/tmp/django_cache/"),
+        }
+}
 
 
 # Password validation
