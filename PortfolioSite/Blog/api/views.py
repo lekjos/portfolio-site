@@ -1,5 +1,4 @@
-from Blog.api.serializers import PostSerializer
-from Blog.models import Post
+from Blog.api.permissions import AuthorModifyOrReadOnly, IsObjectAdmin
 
 from rest_framework import viewsets
 from rest_framework.decorators import action
@@ -10,6 +9,7 @@ from rest_framework.response import Response
 class PostViewSet(viewsets.ModelViewSet):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
+    permissions_classes = [AuthorModifyOrReadOnly | IsObjectAdmin]
     
     class Meta:
         model = Post
