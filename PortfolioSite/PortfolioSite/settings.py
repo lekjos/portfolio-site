@@ -58,9 +58,13 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.sites',
 	'django.contrib.sitemaps',
+    'rest_framework', #blog api
+    'rest_framework.authtoken',
     'anymail',
-    'Main',
     'tinymce',
+    'Auth',
+    'Blog',
+    'Main',
 ]
 
 MIDDLEWARE = [
@@ -91,6 +95,9 @@ TEMPLATES = [
         },
     },
 ]
+
+#custom user model
+AUTH_USER_MODEL = 'Auth.User'
 
 ## Debug Toolbar
 FORCE_DEBUG_TOOLBAR = True if os.getenv('FORCE_DEBUG_TOOLBAR', 'False') == 'True' else False
@@ -277,4 +284,18 @@ TINYMCE_DEFAULT_CONFIG = {
     "fullscreen  preview save print | insertfile image media pageembed template link anchor codesample | "
     "a11ycheck ltr rtl | showcomments addcomment code",
     "custom_undo_redo_levels": 10,
+}
+
+REST_FRAMEWORK = {
+    # Use Django's standard `django.contrib.auth` permissions,
+    # or allow read-only access for unauthenticated users.
+    'DEFAULT_PERMISSION_CLASSES': [
+        "rest_framework.permissions.IsAuthenticated",
+        # 'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
+    ],
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        # "rest_framework.authentication.BasicAuthentication",
+        "rest_framework.authentication.SessionAuthentication",
+        "rest_framework.authentication.TokenAuthentication",
+    ]
 }
