@@ -34,6 +34,9 @@ urlpatterns = [
     path(SITEMAP_URL, sitemap, {'sitemaps': sitemaps}, name='django.contrib.sitemaps.views.sitemap'),
     path('sitemap.txt/', RedirectView.as_view(url='/'+SITEMAP_URL, permanent=False)),
     path('sitemap/', RedirectView.as_view(url='/'+SITEMAP_URL, permanent=False)),
+    path('api-auth/', include('rest_framework.urls')),
+    path('blog/',include('Blog.urls')),
+    path('api/v1/', include('Blog.api.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 # add debug toolbar urls if in DEBUG mode
