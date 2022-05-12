@@ -59,8 +59,9 @@ INSTALLED_APPS = [
     'django.contrib.sites',
 	'django.contrib.sitemaps',
     'anymail',
-    'Main',
     'tinymce',
+    'Blog',
+    'Main',
 ]
 
 MIDDLEWARE = [
