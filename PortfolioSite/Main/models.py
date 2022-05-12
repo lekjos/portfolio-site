@@ -169,6 +169,7 @@ class StepManager(models.Manager):
 
             return instance
 
+# Abstract
 class OrderedModel(models.Model):
     order = models.PositiveSmallIntegerField()
     objects = StepManager()

@@ -5,10 +5,11 @@ from rest_framework.authtoken import views
 from rest_framework.urlpatterns import format_suffix_patterns
 from rest_framework.routers import DefaultRouter
 # from Blog.api.views import PostList, PostDetail
-from Blog.api.views import PostViewSet
+from Blog.api.views import PostViewSet, TagViewSet
 
 router = DefaultRouter()
 router.register('posts',PostViewSet)
+router.register('tags',TagViewSet)
 
 
 urlpatterns = [
