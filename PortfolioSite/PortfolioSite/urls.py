@@ -15,21 +15,25 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.conf import settings
-from django.urls import path, include
+from django.urls import path, include, reverse
 from django.conf.urls.static import static
 from django.contrib.sitemaps.views import sitemap
 from Main.sitemaps import ProjectSitemap, HomeSitemap
+from django.views.generic.base import RedirectView
 
 sitemaps = {
     "home": HomeSitemap,
     "projects": ProjectSitemap,
 }
+SITEMAP_URL = 'sitemap.xml/'
 
 urlpatterns = [
     path('',include('Main.urls')),
     path('admin/', admin.site.urls),
     path('tinymce/', include('tinymce.urls')),
-    path('sitemap.xml/', sitemap, {'sitemaps': sitemaps}, name='django.contrib.sitemaps.views.sitemap'),
+    path(SITEMAP_URL, sitemap, {'sitemaps': sitemaps}, name='django.contrib.sitemaps.views.sitemap'),
+    path('sitemap.txt/', RedirectView.as_view(url='/'+SITEMAP_URL, permanent=False)),
+    path('sitemap/', RedirectView.as_view(url='/'+SITEMAP_URL, permanent=False)),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 # add debug toolbar urls if in DEBUG mode
