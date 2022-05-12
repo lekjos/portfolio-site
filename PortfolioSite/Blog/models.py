@@ -52,3 +52,15 @@ class Post(models.Model):
     def __str__(self):
         return self.title
 
+class Profile(models.Model):
+    """
+    Profile about the author, tied to user model
+    """
+    user = models.OneToOneField(
+        settings.AUTH_USER_MODEL, on_delete=models.CASCADE,
+        related_name="profile"
+        )
+    bio = tinymce_models.HTMLField()
+
+    def __str__(self):
+        return f"{self.__class__.__name__} object for {self.user}"
