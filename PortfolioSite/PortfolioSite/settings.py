@@ -62,6 +62,7 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'anymail',
     'tinymce',
+    'Auth',
     'Blog',
     'Main',
 ]
@@ -94,6 +95,9 @@ TEMPLATES = [
         },
     },
 ]
+
+#custom user model
+AUTH_USER_MODEL = 'Auth.User'
 
 ## Debug Toolbar
 FORCE_DEBUG_TOOLBAR = True if os.getenv('FORCE_DEBUG_TOOLBAR', 'False') == 'True' else False
