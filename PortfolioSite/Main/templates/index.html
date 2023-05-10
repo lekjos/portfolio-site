@@ -103,12 +103,12 @@
           <div class="col-md-4 my-3 skill-group text-center">
             <i class="bx bx-code-alt mb-4"></i>
             <h2 class="mb-3"> Languages</h2>
-            <p class="text-muted"> Python, HTML/CSS, C++, JavaScript, Git, VBA</p>
+            <p class="text-muted"> Python, JavaScript, C++, HTML/CSS, Git, Bash</p>
           </div>
           <div class="col-md-4 my-3 skill-group text-center">
             <i class="bx bxs-analyse mb-4"></i>
             <h2 class="mb-3"> Frameworks</h2>
-            <p class="text-muted">Django, Flask, Bootstrap 4, Wx, OAuth2</p>
+            <p class="text-muted">Django, React, Flask, MUI, Bootstrap, Wx, OAuth2</p>
           </div>
           <div class="col-md-4 my-3 skill-group text-center">
             <i class="bx bxs-data mb-4"></i>
@@ -124,25 +124,25 @@
           </div>
           <div class="col-md-4 my-3 skill-group text-center">
             <i class="bx bx-test-tube mb-4"></i>
-            <h2 class="mb-3"> Testing</h2>
-            <p class="text-muted"> UnitTest, PyTest</p>
+            <h2 class="mb-3"> Testing & CI</h2>
+            <p class="text-muted"> PyTest, Jest, Jenkins, UnitTest</p>
           </div>
           <div class="col-md-4 my-3 skill-group text-center">
             <i class="bx bx-git-branch mb-4"></i>
             <h2 class="mb-3"> Paradigms</h2>
-            <p class="text-muted"> OOP, MVC, TDD</p>
+            <p class="text-muted"> OOP, MVC, TDD, GraphQL</p>
           </div>
         </div>
         <div class="row skills-content justify-content-center">
           <div class="col-md-4 my-3 skill-group text-center">
             <i class="bx bxs-compass mb-4"></i>
             <h2 class="mb-3"> Project Management</h2>
-            <p class="text-muted"> PMP-trained, Agile, SCRUM, Waterfall</p>
+            <p class="text-muted"> PMP-trained, Agile, SCRUM</p>
           </div>
           <div class="col-md-4 my-3 skill-group text-center">
             <i class="bx bx-conversation mb-4"></i>
             <h2 class="mb-3"> Product Management</h2>
-            <p class="text-muted"> Customer Engagement, Surveys, A-B Testing</p>
+            <p class="text-muted"> Survey Design, A-B Testing, JIRA</p>
           </div>
 
         </div>
@@ -162,6 +162,20 @@
         <div class="row">
           <div class="col-lg-6" data-aos="fade-up" data-aos-delay="100">
             <h3 class="resume-title">Professional Experience</h3>
+            <div class="resume-item">
+              <h4>Software Engineer</h4>
+              <h5>June 2022 - Present</h5>
+              <p><em>Remote West Coast (EST Work Hours)</em></p>
+              <ul>
+                <li>Full-stack engineer on {% if 10 in project_ids %}<a href="{% url 'project' slug='connectwise-siem' %}">Connectwise SIEM</a>{%else%}Connectwise SIEM{%endif%} with a backend focus.</li>
+                <li>Improved app refresh time by 60%.</li>
+                <li>Reduced build time by 75%, improved test suite usability, and set up Jenkins CI/CD server.</li>
+                <li>Wrote Django app to share security content and built in-app notifications system.</li>
+                <li>Decoupled microservices which were directly accessing Django db by creating high-performance API.</li>
+                <li>Automated deploys to ECS and EBS in CI/CD pipeline.</li>
+                <li>Upgraded major Django and Python versions of legacy server.</li>
+              </ul>
+            </div>
             <div class="resume-item">
               <h4>Strategy and Data Science Consultant</h4>
               <h5>July 2020 - Present</h5>
