@@ -1,6 +1,7 @@
 from django.test import TestCase
 from Main.tests.test_views import BaseTest
 
+
 class GlobalProcessorTest(BaseTest):
     """
     Validate that global context processor is spitting out values

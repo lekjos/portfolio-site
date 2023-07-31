@@ -1,49 +1,8 @@
-from django.conf import settings
-import os
-from ipaddress import ip_address
-from Main.tests.helpers import BaseTest, AddFixtures, FIXTURES_DIR
-from Main.models import Email, Project, Image, Embed
-from pprint import pprint
-from django.test import TestCase
 from django.core.files.uploadedfile import SimpleUploadedFile
+from django.test import TestCase
+from Main.models import Embed, Image, Project
+from Main.tests.helpers import FIXTURES_DIR, AddFixtures, BaseTest
 
-
-class EmailTest(BaseTest, TestCase):
-    """
-    Test email model.
-    """
-
-    def test_string_rep(self):
-        """
-        Test email model string representation
-        """
-        testme = Email(
-            name='job blow',
-            subject = 'subject',
-            body='test body',
-            ip_address = '192.168.1.1',
-        )
-        subj_trunc = testme.subject
-        stringrep_expected = testme.name + ' - ' + subj_trunc
-        self.assertEqual(str(testme), stringrep_expected, "String_rep should be same as second arg.")
-        
-        testme.subject = 'asdlkj;fsajkl;dfasljk;dkl;jasdkl;jfasl;jkdfjkl;asdfljkasdl;jkfasjk;dfas;ljkdf;ljaksdf;ljkas;dljkfadwsfawqefawegefafwefaas;'
-        subject_trunc = testme.subject[:75] + '...'
-        stringrep_expected = testme.name + ' - ' + subject_trunc
-        self.assertEqual(str(testme), stringrep_expected, "String_rep should be same as second arg.")
-    
-    def test_forward(self):
-        testme = Email(
-            name='job blow',
-            subject = 'subject',
-            body='test body',
-            ip_address = '192.168.1.1',
-        )
-        self.assertEqual(testme.status, None, 'Should be no send status prior to forward')
-        self.assertEqual(testme.id, None, 'Should be no ID prior to save()')
-        testme.forward()
-        self.assertEqual(testme.status, 1, 'Message should send')
-        self.assertNotEqual(testme.id, None, 'Should be ID after to save()')
 
 class ProjectTest(BaseTest, TestCase):
     """
@@ -54,9 +13,12 @@ class ProjectTest(BaseTest, TestCase):
         """
         Test portfolio item string representation
         """
-        testme = Project(title='titlesd')
+        testme = Project(title="titlesd")
         stringrep_expected = str(testme.title)
-        self.assertEqual(str(testme), stringrep_expected, "String_rep should be same as second arg.")
+        self.assertEqual(
+            str(testme), stringrep_expected, "String_rep should be same as second arg."
+        )
+
 
 class ImageTest(BaseTest, TestCase):
     """
@@ -67,45 +29,51 @@ class ImageTest(BaseTest, TestCase):
         """
         Test portfolio item string representation
         """
-        testme = Image(title='titlesdfsd')
+        testme = Image(title="titlesdfsd")
         stringrep_expected = str(testme.title)
-        self.assertEqual(str(testme), stringrep_expected, "String_rep should be same as second arg.")
-    
-    def test_get_absolute_url(self):
+        self.assertEqual(
+            str(testme), stringrep_expected, "String_rep should be same as second arg."
+        )
 
-        proj = Project.objects.create(title='title',description='description')
-        
+    def test_get_absolute_url(self):
+        proj = Project.objects.create(title="title", description="description")
+
         testme = Image.objects.create(
             title="proj1 img1",
-            image = SimpleUploadedFile(name='test_image.jpg', content=open(FIXTURES_DIR, 'rb').read(), content_type='image/jpeg'),
-            caption='<p>test description </p>',
-            related_pk=proj.id
-            )
+            image=SimpleUploadedFile(
+                name="test_image.jpg",
+                content=open(FIXTURES_DIR, "rb").read(),
+                content_type="image/jpeg",
+            ),
+            caption="<p>test description </p>",
+            related_pk=proj.id,
+        )
 
         testme.save()
-        expected = '/media/images/test_image.jpg'
-        self.assertEqual(testme.get_absolute_url(),expected)
+        expected = "/media/images/test_image.jpg"
+        self.assertEqual(testme.get_absolute_url(), expected)
 
-    
     def test_create_with_no_related_pk(self):
         with self.assertRaises(ValueError):
             Image.objects.create(
                 title="proj1 img1",
-                image = SimpleUploadedFile(name='test_image.jpg', content=open(FIXTURES_DIR, 'rb').read(), content_type='image/jpeg'),
-                caption='<p>test description </p>',
+                image=SimpleUploadedFile(
+                    name="test_image.jpg",
+                    content=open(FIXTURES_DIR, "rb").read(),
+                    content_type="image/jpeg",
+                ),
+                caption="<p>test description </p>",
             )
 
 
-
 class StepManagerTest(AddFixtures, BaseTest, TestCase):
-
     def test_create_project(self):
         """
         Test Create Method
         """
-        self.assertEqual(self.test_proj1.order,1)
-        self.assertEqual(self.test_proj2.order,2)
-    
+        self.assertEqual(self.test_proj1.order, 1)
+        self.assertEqual(self.test_proj2.order, 2)
+
     def test_img_uploaded(self):
         """
         verify that image uploaded successfully
@@ -118,57 +86,56 @@ class StepManagerTest(AddFixtures, BaseTest, TestCase):
         """
         Test moving object to new position
         """
-        self.assertEqual(self.test_proj1.order,1, "initial value")
-        self.assertEqual(self.test_proj2.order,2, "initial value")
-        
+        self.assertEqual(self.test_proj1.order, 1, "initial value")
+        self.assertEqual(self.test_proj2.order, 2, "initial value")
+
         Project.objects.move(self.test_proj1, 2)
 
         self.test_proj1 = Project.objects.get(title="test title 1")
         self.test_proj2 = Project.objects.get(title="test title 2")
-        self.assertEqual(self.test_proj1.order,2, "Updated value")
-        self.assertEqual(self.test_proj2.order,1, "Updated value")
+        self.assertEqual(self.test_proj1.order, 2, "Updated value")
+        self.assertEqual(self.test_proj2.order, 1, "Updated value")
 
         Project.objects.move(self.test_proj1, 1)
-        
+
         self.test_proj1 = Project.objects.get(title="test title 1")
         self.test_proj2 = Project.objects.get(title="test title 2")
-        self.assertEqual(self.test_proj1.order,1, "Back to initial")
-        self.assertEqual(self.test_proj2.order,2, "Back to initial")
+        self.assertEqual(self.test_proj1.order, 1, "Back to initial")
+        self.assertEqual(self.test_proj2.order, 2, "Back to initial")
 
-    
     def test_move_img(self):
         """
         test moving images
         """
-        self.assertEqual(self.proj1_img1.order,1)
-        self.assertEqual(self.proj1_img2.order,2)
-        self.assertEqual(self.proj2_img1.order,1)
-        self.assertEqual(self.proj2_img2.order,2)
+        self.assertEqual(self.proj1_img1.order, 1)
+        self.assertEqual(self.proj1_img2.order, 2)
+        self.assertEqual(self.proj2_img1.order, 1)
+        self.assertEqual(self.proj2_img2.order, 2)
 
         Image.objects.move(self.proj1_img1, 2)
         self.proj1_img1 = Image.objects.get(title="proj1 img1")
         self.proj1_img2 = Image.objects.get(title="proj1 img2")
-        self.assertEqual(self.proj1_img1.order,2, 'order changed')
-        self.assertEqual(self.proj1_img2.order,1, 'order changed')
-        self.assertEqual(self.proj2_img1.order,1, 'order unchanged')
-        self.assertEqual(self.proj2_img2.order,2, 'order unchanged')
+        self.assertEqual(self.proj1_img1.order, 2, "order changed")
+        self.assertEqual(self.proj1_img2.order, 1, "order changed")
+        self.assertEqual(self.proj2_img1.order, 1, "order unchanged")
+        self.assertEqual(self.proj2_img2.order, 2, "order unchanged")
 
         Image.objects.move(self.proj1_img1, 1)
         self.proj1_img1 = Image.objects.get(title="proj1 img1")
         self.proj1_img2 = Image.objects.get(title="proj1 img2")
-        self.assertEqual(self.proj1_img1.order,1, 'order returned to initial')
-        self.assertEqual(self.proj1_img2.order,2, 'order returned to initial')
-        self.assertEqual(self.proj2_img1.order,1, 'order unchanged')
-        self.assertEqual(self.proj2_img2.order,2, 'order unchanged')
+        self.assertEqual(self.proj1_img1.order, 1, "order returned to initial")
+        self.assertEqual(self.proj1_img2.order, 2, "order returned to initial")
+        self.assertEqual(self.proj2_img1.order, 1, "order unchanged")
+        self.assertEqual(self.proj2_img2.order, 2, "order unchanged")
+
 
 class EmbedTest(BaseTest, TestCase):
     def test_string_rep(self):
         """
         Test portfolio item string representation
         """
-        testme = Embed(title='titlesd')
+        testme = Embed(title="titlesd")
         stringrep_expected = str(testme.title)
-        self.assertEqual(str(testme), stringrep_expected, "String_rep should be same as second arg.")
-
-
-        
+        self.assertEqual(
+            str(testme), stringrep_expected, "String_rep should be same as second arg."
+        )

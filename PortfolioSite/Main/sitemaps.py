@@ -2,6 +2,7 @@ from django.contrib.sitemaps import Sitemap
 from django.urls import reverse
 from Main.models import Project
 
+
 class ProjectSitemap(Sitemap):
     changefreq = "yearly"
     priority = 0.7

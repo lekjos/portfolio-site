@@ -1,5 +1,8 @@
-from django.conf import settings
 import os
+
+from django.conf import settings
+
+
 def global_processor(request):
     """
     Adds globally available context for base template.
