@@ -5,9 +5,7 @@ from itertools import chain
 from django.conf import settings
 from django.contrib.auth.mixins import UserPassesTestMixin
 from django.db.models import F, Max, OuterRef, Subquery
-from django.http import (
-    JsonResponse,
-)
+from django.http import JsonResponse
 from django.views import View
 from django.views.generic import DetailView, TemplateView
 from Main.helpers import find_next_and_previous

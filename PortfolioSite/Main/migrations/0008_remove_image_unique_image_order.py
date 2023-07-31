@@ -4,14 +4,13 @@ from django.db import migrations
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('Main', '0007_project_published'),
+        ("Main", "0007_project_published"),
     ]
 
     operations = [
         migrations.RemoveConstraint(
-            model_name='image',
-            name='unique_image_order',
+            model_name="image",
+            name="unique_image_order",
         ),
     ]

@@ -4,15 +4,14 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('Main', '0006_alter_email_status'),
+        ("Main", "0006_alter_email_status"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='project',
-            name='published',
+            model_name="project",
+            name="published",
             field=models.BooleanField(default=False),
         ),
     ]

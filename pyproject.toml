@@ -19,6 +19,8 @@ django-tinymce = "3.4.0"
 coverage = "^7.2.5"
 mixer = "^7.2.2"
 django-debug-toolbar = "^4.0.0"
+black = "^23.7.0"
+isort = "^5.12.0"
 
 [build-system]
 requires = ["poetry-core"]

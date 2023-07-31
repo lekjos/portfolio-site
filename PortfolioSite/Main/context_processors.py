@@ -11,5 +11,5 @@ def global_processor(request):
 
     return {
         "root_url": root_url,
-        "django_environ": os.environ['DJANGO_ENV'],
-        }
+        "django_environ": os.environ["DJANGO_ENV"],
+    }

@@ -6,7 +6,6 @@ from django.db.models import Deferrable, F, Max, UniqueConstraint
 from django.template.defaultfilters import slugify
 from django.urls import reverse
 from tinymce import models as tinymce_models
-import logging
 
 logger = logging.getLogger(__name__)
 

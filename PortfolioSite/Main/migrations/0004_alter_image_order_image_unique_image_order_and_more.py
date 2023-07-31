@@ -5,23 +5,30 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('Main', '0003_image_caption_project_order'),
+        ("Main", "0003_image_caption_project_order"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='image',
-            name='order',
+            model_name="image",
+            name="order",
             field=models.PositiveSmallIntegerField(),
         ),
         migrations.AddConstraint(
-            model_name='image',
-            constraint=models.UniqueConstraint(deferrable=django.db.models.constraints.Deferrable['DEFERRED'], fields=('order',), name='unique_image_order'),
+            model_name="image",
+            constraint=models.UniqueConstraint(
+                deferrable=django.db.models.constraints.Deferrable["DEFERRED"],
+                fields=("order",),
+                name="unique_image_order",
+            ),
         ),
         migrations.AddConstraint(
-            model_name='project',
-            constraint=models.UniqueConstraint(deferrable=django.db.models.constraints.Deferrable['DEFERRED'], fields=('order',), name='unique_project_order'),
+            model_name="project",
+            constraint=models.UniqueConstraint(
+                deferrable=django.db.models.constraints.Deferrable["DEFERRED"],
+                fields=("order",),
+                name="unique_project_order",
+            ),
         ),
     ]

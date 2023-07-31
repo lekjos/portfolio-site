@@ -4,21 +4,20 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('Main', '0004_alter_image_order_image_unique_image_order_and_more'),
+        ("Main", "0004_alter_image_order_image_unique_image_order_and_more"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='email',
-            name='status',
-            field=models.BooleanField(default=1, verbose_name='Delivery Status'),
+            model_name="email",
+            name="status",
+            field=models.BooleanField(default=1, verbose_name="Delivery Status"),
             preserve_default=False,
         ),
         migrations.AlterField(
-            model_name='email',
-            name='email',
-            field=models.EmailField(max_length=500, verbose_name='Email'),
+            model_name="email",
+            name="email",
+            field=models.EmailField(max_length=500, verbose_name="Email"),
         ),
     ]

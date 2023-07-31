@@ -4,13 +4,12 @@ from django.db import migrations
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('Main', '0015_project_last_modified'),
+        ("Main", "0015_project_last_modified"),
     ]
 
     operations = [
         migrations.DeleteModel(
-            name='Email',
+            name="Email",
         ),
     ]

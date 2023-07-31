@@ -5,20 +5,19 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('Main', '0002_image_project'),
+        ("Main", "0002_image_project"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='image',
-            name='caption',
+            model_name="image",
+            name="caption",
             field=tinymce.models.HTMLField(blank=True, max_length=1500, null=True),
         ),
         migrations.AddField(
-            model_name='project',
-            name='order',
+            model_name="project",
+            name="order",
             field=models.PositiveSmallIntegerField(default=1),
             preserve_default=False,
         ),
