@@ -13,29 +13,34 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-from django.contrib import admin
 from django.conf import settings
-from django.urls import path, include, reverse
 from django.conf.urls.static import static
+from django.contrib import admin
 from django.contrib.sitemaps.views import sitemap
-from Main.sitemaps import ProjectSitemap, HomeSitemap
+from django.urls import include, path
 from django.views.generic.base import RedirectView
+from Main.sitemaps import HomeSitemap, ProjectSitemap
 
 sitemaps = {
     "home": HomeSitemap,
     "projects": ProjectSitemap,
 }
-SITEMAP_URL = 'sitemap.xml/'
+SITEMAP_URL = "sitemap.xml/"
 
 urlpatterns = [
-    path('',include('Main.urls')),
-    path('admin/', admin.site.urls),
-    path('tinymce/', include('tinymce.urls')),
-    path(SITEMAP_URL, sitemap, {'sitemaps': sitemaps}, name='django.contrib.sitemaps.views.sitemap'),
-    path('sitemap.txt/', RedirectView.as_view(url='/'+SITEMAP_URL, permanent=False)),
-    path('sitemap/', RedirectView.as_view(url='/'+SITEMAP_URL, permanent=False)),
+    path("", include("Main.urls")),
+    path("admin/", admin.site.urls),
+    path("tinymce/", include("tinymce.urls")),
+    path(
+        SITEMAP_URL,
+        sitemap,
+        {"sitemaps": sitemaps},
+        name="django.contrib.sitemaps.views.sitemap",
+    ),
+    path("sitemap.txt/", RedirectView.as_view(url="/" + SITEMAP_URL, permanent=False)),
+    path("sitemap/", RedirectView.as_view(url="/" + SITEMAP_URL, permanent=False)),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 # add debug toolbar urls if in DEBUG mode
 if settings.DEBUG:
-    urlpatterns.append(path('__debug__/', include('debug_toolbar.urls')))
+    urlpatterns.append(path("__debug__/", include("debug_toolbar.urls")))

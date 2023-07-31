@@ -4,23 +4,44 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     initial = True
 
-    dependencies = [
-    ]
+    dependencies = []
 
     operations = [
         migrations.CreateModel(
-            name='Email',
+            name="Email",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=200, verbose_name='Name')),
-                ('email', models.EmailField(max_length=254, verbose_name='Email')),
-                ('body', models.TextField(help_text='4000 Character Limmit', max_length=4000, verbose_name='Body')),
-                ('subject', models.CharField(max_length=750, verbose_name='Subject')),
-                ('submitted_date', models.DateTimeField(auto_now_add=True, verbose_name='Submitted At')),
-                ('ip_address', models.GenericIPAddressField(verbose_name='Sender IP Address')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("name", models.CharField(max_length=200, verbose_name="Name")),
+                ("email", models.EmailField(max_length=254, verbose_name="Email")),
+                (
+                    "body",
+                    models.TextField(
+                        help_text="4000 Character Limmit",
+                        max_length=4000,
+                        verbose_name="Body",
+                    ),
+                ),
+                ("subject", models.CharField(max_length=750, verbose_name="Subject")),
+                (
+                    "submitted_date",
+                    models.DateTimeField(
+                        auto_now_add=True, verbose_name="Submitted At"
+                    ),
+                ),
+                (
+                    "ip_address",
+                    models.GenericIPAddressField(verbose_name="Sender IP Address"),
+                ),
             ],
         ),
     ]

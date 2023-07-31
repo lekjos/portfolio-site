@@ -4,15 +4,16 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('Main', '0005_email_status_alter_email_email'),
+        ("Main", "0005_email_status_alter_email_email"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='email',
-            name='status',
-            field=models.BooleanField(blank=True, null=True, verbose_name='Delivery Status'),
+            model_name="email",
+            name="status",
+            field=models.BooleanField(
+                blank=True, null=True, verbose_name="Delivery Status"
+            ),
         ),
     ]

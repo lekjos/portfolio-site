@@ -4,15 +4,14 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('Main', '0012_project_slug'),
+        ("Main", "0012_project_slug"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='project',
-            name='short_description',
+            model_name="project",
+            name="short_description",
             field=models.CharField(blank=True, max_length=500, null=True),
         ),
     ]
