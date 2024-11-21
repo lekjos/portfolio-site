@@ -26,10 +26,8 @@
           {% for project in projects %}
             <div class="col-lg-4 col-md-6 portfolio-item filter-app">
               <div class="portfolio-wrap">
-                <a href="{% url 'project' slug=project.slug %}" class="d-block h-100"><span></span></a>                
+                <a href="{% url 'project' slug=project.slug %}" class="d-block h-100"><span></span></a>
                   <img src="{{media_url}}{{project.first_image}}" class="img-fluid" alt="{{project.title}}">
-                 
-                  
                   <div class="portfolio-links w-100 h-100 text-center">
                     <a href="{% url 'project' slug=project.slug %}" title="{{project.title}}" class="w-100">{{project.title}}</a>
                   </div>
@@ -62,15 +60,15 @@
           <div class="col-lg-8 pt-4 pt-lg-0 content" data-aos="fade-left">
             <h3>Hi, I'm Leif.</h3>
             <p>
-              I love working with technology companies to bring products to market. During my time at HaptX, I was involved in all aspects of the business: design, testing, customer support, finance and recruiting. 
-              I learned to prioritize having solid processes that lead to long term success over sacrificing quality for short term results.
+              I love working with technology companies to bring products to market. During my time at HaptX, I was involved in all aspects of the business: design, testing, customer support, finance and recruiting.
+              I learned to prioritize having solid processes that lead to long term success. It is possible to invest in process without sacrificing short term deliverables.
             </p>
-            <p> 
+            <p>
               I also consult for small-medium businesses, helping them make the right data-driven decisions. My clients are interested in using technology to scale their business, ensuring quality with repeatable processes, and focusing their effort on the highest impact problem.
               With 9 years of experience in startup operations, a passion for data, and the technical know-how to implement solutions, I can help you bring your business to the next level.
             </p>
             <p>
-              I also love big wall climbing, cycling, reading, and skate skiing. 
+              I also love big wall climbing, cycling, reading, and skate skiing.
             </p>
           </div>
         </div>
@@ -135,7 +133,6 @@
           </div>
 
         </div>
-				
 			</div>
 
     </section><!-- End Skills Section -->
@@ -153,10 +150,15 @@
             <h3 class="resume-title">Professional Experience</h3>
             <div class="resume-item">
               <h4>Full Stack Django Engineer</h4>
-              <h5>September 2023 - Present</h5>
+              <h5>September 2023 - November 2024</h5>
               <p><em>WisdomTree Prime - Remote (EST)</em></p>
               <ul>
-                <li>I'm currently developing the WisdomTree Prime app.</li>
+                <li>Backend engineer on the WisdomTree Prime App, a Stellar Blockchain-backed banking and investment app</li>
+                <li>Built system for resolving failed ACH, Card, and Stellar money movement</li>
+                <li>Significantly decreased app load time by optimizing queries on several views</li>
+                <li>Developed asset accruals payment and settlement backend to calculate payments due to customers holding money market funds</li>
+                <li>Integrated transaction with third-party compliance software and Zendesk</li>
+                <li>Built ACH Return flows – e.g. what happens when a check bounces</li>
               </ul>
             </div>
             <div class="resume-item">
@@ -164,19 +166,20 @@
               <h5>June 2022 - September 2023</h5>
               <p><em>Connectwise LLC. - Remote</em></p>
               <ul>
-                <li>Full-stack engineer on {% if 10 in project_ids %}<a href="{% url 'project' slug='connectwise-siem' %}">Connectwise SIEM</a>{%else%}Connectwise SIEM{%endif%} with a backend focus.</li>
-                <li>Improved app refresh time by 60%.</li>
-                <li>Reduced build time by 75%, improved test suite usability, and set up Jenkins CI/CD server.</li>
+                <li>Full-stack engineer on {% if 10 in project_ids %}<a href="{% url 'project' slug='connectwise-siem' %}">Connectwise SIEM</a>{%else%}Connectwise SIEM{%endif%} with a backend focus</li>
+                <li>Improved ReactJS app refresh time by 60% by optimizing hot reload of components</li>
+                <li>Optimized backend views by optimizing SQL queries</li>
+                <li>Reduced CI/CD build time by 75%, improved test suite usability, and set up Jenkins CI/CD server</li>
                 <li>Wrote Django app to share security content and built in-app notifications system.</li>
-                <li>Decoupled microservices which were directly accessing Django db by creating high-performance API.</li>
-                <li>Automated deploys to ECS and EBS in CI/CD pipeline.</li>
-                <li>Upgraded major Django and Python versions of legacy server.</li>
-                <li>Implemented first module of security product port to new Asio platform (React)</li>
+                <li>Decoupled microservices which were directly accessing Django db by creating high-performance API</li>
+                <li>Automated deploys to ECS and EBS in CI/CD pipeline</li>
+                <li>Upgraded major Django and Python versions of legacy serve.</li>
+                <li>Implemented first module of our SIEM port to the new Asio platform (React)</li>
               </ul>
             </div>
             <div class="resume-item">
               <h4>Strategy and Data Science Consultant</h4>
-              <h5>July 2020 - Present</h5>
+              <h5>July 2020 - June 2022</h5>
               <p><em>Remote West Coast </em></p>
               <ul>
                 <li>Created {% if 9 in project_ids %}<a href="{% url 'project' slug='nojessery-custom-erp' %}">custom ERP system</a>{%else%}custom ERP system{%endif%} that combines data from payroll, CRM, quoting tool, time tracking, phone system, and QuickBooks to provide real-time business intelligence, and KPIs</li>
@@ -280,7 +283,6 @@
       <!-- ======= Contact Section ======= -->
       <section id="contact" class="contact">
         <div class="container">
-          
           <div class="section-title">
             <h2>Contact</h2>
             <p><a target="_blank" href="https://www.linkedin.com/in/leif-kjos/" class="linkedin">Message me on LinkedIn</a></p>
@@ -293,7 +295,6 @@
 {% if user.is_authenticated %}
   <script type="text/javascript">
     // update all tasks
-         
     $('.reorderBtn').click(function(event) {
         var pk_action = $(this).attr('id').split('-');
         var pk = pk_action[0];
@@ -325,11 +326,8 @@
                     console.log(errorThrown);
                     {% comment %} $('#testing').load(result); {% endcomment %}
                 },
-                
             }
         )
-        
-        
     })
   </script>
 
